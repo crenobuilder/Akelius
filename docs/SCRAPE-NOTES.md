@@ -1,47 +1,35 @@
 # Notes de scraping — akelius.fr
 
-**Date de tentative :** 2026-08-16 (~17h35 UTC)
-**Objectif :** importer les annonces Paris réelles depuis https://akelius.fr/en/search/france/apartment/paris, la liste des villes depuis https://akelius.fr/en, et le logo officiel.
+**Dernière exécution : 2026-08-16 (~18h10 UTC) — réussie.**
+(Une première tentative le même jour avait échoué : domaine bloqué par la politique réseau de l'environnement, gateway répondant 403 au CONNECT. Résolu en passant l'environnement « luxe » en accès réseau « Full ».)
 
-## Résultat : échec — accès réseau bloqué
+## Ce qui a été récupéré
 
-Malgré l'autorisation annoncée du domaine `akelius.fr` dans la politique réseau de l'environnement, toutes les tentatives d'accès ont été refusées par le proxy d'egress.
+| Fichier | Contenu |
+|---|---|
+| `src/data/real/akelius-paris.json` | **16 annonces** réellement en ligne (12 à Paris intra-muros, 4 en proche banlieue : Asnières-sur-Seine, Boulogne-Billancourt ×2, Neuilly-sur-Seine) |
+| `src/data/real/akelius-cities.json` | **9 villes / 4 pays** du sélecteur de la page d'accueil + `logoUrl` |
+| `public/akelius-logo.svg` | Logo officiel (SVG, 9,2 Ko) depuis `https://akelius.fr/assets/img/akelius_logo.svg` |
 
-### Détails des échecs
+## Endpoints et structures découverts
 
-1. **curl via le proxy d'agent** (`HTTPS_PROXY=http://127.0.0.1:40499`) :
-   - `https://akelius.fr/en` → `curl: (56) CONNECT tunnel failed, response 403` (code HTTP rapporté : `000`)
-   - Mêmes erreurs pour `www.akelius.fr`, `akelius.com`, `www.akelius.com`.
+Le site est une SPA **Angular Universal** : les réponses API sont embarquées dans le HTML SSR via `<script id="akeliusWebsite-state" type="application/json">` (transfer state), ce qui a permis de tout récupérer en curl, sans navigateur.
 
-2. **Statut du proxy** (`$HTTPS_PROXY/__agentproxy/status`) — échec relayé enregistré :
+- **Liste des annonces** : `https://akelius.fr/lettings/marketing/v2/FR/published-adverts.json` — tableau d'annonces avec `address` (lat/lng, borough, postalCode), `keyfacts` (base-rent, operational-costs, total-rent, unit-size, number-of-rooms/bedrooms, floor…), `imageUrls`, `teaserImageUrl`.
+- **Détail d'une annonce** : `https://akelius.fr/lettings/marketing/v2/FR/{id}.json` (ex. `6301_A12.json`) — ~49 keyfacts : additional-rent, deposit, construction-year, DPE (`energy-certificate-class`), équipements booléens (`has-builtin-kitchen`, `has-elevator`, `has-balcony`…), station de métro (`name-of-station`), `notice-period`, frais d'agence, photos en 400/600/2400 px + plans (`isFloorplan`).
+- **Page de détail canonique** (route Angular trouvée dans le bundle) : `https://akelius.fr/en/search/france/detail/{id}`.
+- **Villes** : `https://akelius.fr/files/v2/cities/cities.json` — 9 villes (Paris, London, Montréal, Ottawa, Quebec City, Toronto, Boston, New York, Washington DC) avec leurs URLs de recherche (rent.akelius.com pour FR/UK/CA, akelius-properties.us pour les USA).
+- **Navigation/shell** : `https://akelius.fr/files/v2/website/shell.json`.
+- **Photos** : servies par `ak-let-api-gateway-production.azure-api.net/api/media/marketing/{uuid}/download/{400|600|2400}` (URLs 600 px retenues dans le JSON).
 
-   ```json
-   {
-     "ts": "2026-08-16T17:33:27.813Z",
-     "kind": "connect_rejected",
-     "detail": "gateway answered 403 to CONNECT (policy denial or upstream failure)",
-     "host": "akelius.fr:443"
-   }
-   ```
+## Choix de mapping
 
-   Le refus vient donc du **gateway amont** (déni de politique), pas du proxy local ni d'un problème TLS.
+- `price` = `total-rent` (loyer mensuel total affiché par le site) ; `baseRent` = `base-rent` ; `charges` = `operational-costs` + `additional-rent` (vérifié : base + charges = total pour les 16 annonces).
+- `title` et `description` sont **composés à partir des champs factuels** du site (pièces, adresse, étage, équipements, station, DPE) — le site ne publie ni titre ni texte marketing par annonce.
+- `district` = champ `borough` (arrondissement à Paris, quartier en banlieue).
 
-3. **Outil WebFetch** (chemin réseau distinct du proxy shell) :
+## Ce qui manque (absent du site)
 
-   ```json
-   {
-     "error_type": "EGRESS_BLOCKED",
-     "domain": "akelius.fr",
-     "message": "Access to akelius.fr is blocked by the network egress proxy."
-   }
-   ```
-
-## Conclusion
-
-L'autorisation du domaine `akelius.fr` n'était pas (encore) effective côté gateway au moment de la tentative — possiblement un délai de propagation de la politique réseau, ou une autorisation appliquée à un autre périmètre. Aucune donnée n'a pu être récupérée ; **aucune donnée n'a été inventée** : les fichiers `src/data/real/akelius-paris.json` et `src/data/real/akelius-cities.json` n'ont pas été créés.
-
-## À refaire une fois l'accès effectif
-
-1. Vérifier : `curl -sSL -o /dev/null -w "%{http_code}" https://akelius.fr/en` (attendu : `200`).
-2. Récupérer la page de recherche Paris, extraire le JSON embarqué (`__NEXT_DATA__` ou équivalent) ou intercepter les réponses API via Playwright (chromium préinstallé : `executablePath: '/opt/pw-browsers/chromium'`).
-3. Produire `src/data/real/akelius-paris.json`, `src/data/real/akelius-cities.json`, éventuellement `public/akelius-logo.svg`, puis mettre à jour ce fichier.
+- **Meublé/non meublé** : aucun champ correspondant dans les keyfacts → `furnished: null`.
+- **Date de disponibilité** : seul `is-available-from-now-on: true` existe (toutes les annonces) → `availableNow: true`, `availableFrom: null`.
+- Textes de description rédigés par annonce : inexistants côté site.

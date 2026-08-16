@@ -1,0 +1,52 @@
+{
+  "scrapedAt": "2026-08-16T18:10:00Z",
+  "source": "https://akelius.fr/en (endpoint https://akelius.fr/files/v2/cities/cities.json)",
+  "logoUrl": "https://akelius.fr/assets/img/akelius_logo.svg",
+  "cities": [
+    {
+      "name": "Montréal",
+      "country": "Canada",
+      "searchUrl": "https://rent.akelius.com/en/search/canada/apartment/montreal"
+    },
+    {
+      "name": "Ottawa",
+      "country": "Canada",
+      "searchUrl": "https://rent.akelius.com/en/search/canada/apartment/ottawa"
+    },
+    {
+      "name": "Quebec City",
+      "country": "Canada",
+      "searchUrl": "https://rent.akelius.com/en/search/canada/apartment/quebec%20city"
+    },
+    {
+      "name": "Toronto",
+      "country": "Canada",
+      "searchUrl": "https://rent.akelius.com/en/search/canada/apartment/toronto"
+    },
+    {
+      "name": "Boston",
+      "country": "USA",
+      "searchUrl": "https://www.akelius-properties.us/searchlisting?citystate=MA"
+    },
+    {
+      "name": "New York",
+      "country": "USA",
+      "searchUrl": "https://www.akelius-properties.us/searchlisting?citystate=NY"
+    },
+    {
+      "name": "Washington DC",
+      "country": "USA",
+      "searchUrl": "https://www.akelius-properties.us/"
+    },
+    {
+      "name": "London",
+      "country": "UK",
+      "searchUrl": "https://rent.akelius.com/en/search/united-kingdom/apartment/london"
+    },
+    {
+      "name": "Paris",
+      "country": "France",
+      "searchUrl": "https://rent.akelius.com/en/search/france/apartment/paris"
+    }
+  ]
+}
