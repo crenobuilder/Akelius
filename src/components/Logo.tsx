@@ -8,23 +8,21 @@ export const TILE_COLORS = [
 ] as const;
 
 /**
- * wordmark akelius : « Akelius » navy avec le « e » rouge.
- * Approximation typographique du logo officiel — à remplacer par le SVG
- * officiel lors de l’intégration finale.
+ * wordmark officiel akelius (svg récupéré de akelius.fr/assets/img/akelius_logo.svg,
+ * servi en local depuis /public).
  */
-export function Wordmark({ className = "text-2xl" }: { className?: string }) {
+export function Wordmark({ className = "h-7" }: { className?: string }) {
   return (
-    <span
-      className={`select-none font-extrabold tracking-tight text-navy ${className}`}
-    >
-      Ak
-      <span style={{ color: "var(--color-logo-red)" }}>e</span>
-      lius
-    </span>
+    <img
+      src="/akelius-logo.svg"
+      alt="Akelius"
+      className={`w-auto select-none ${className}`}
+      draggable={false}
+    />
   );
 }
 
-/** pastille « A » sur tuile navy arrondie — favicon, loaders, avatars */
+/** pastille « A » sur tuile navy arrondie — loaders, avatars */
 export function LogoMark({ className = "h-8 w-8 text-base" }: { className?: string }) {
   return (
     <span
@@ -40,7 +38,7 @@ export function LogoMark({ className = "h-8 w-8 text-base" }: { className?: stri
 export default function Logo({ suffix }: { suffix?: string }) {
   return (
     <Link href="/" className="group flex items-baseline gap-2 select-none">
-      <Wordmark className="text-2xl transition-opacity duration-200 group-hover:opacity-80" />
+      <Wordmark className="h-6 transition-opacity duration-200 group-hover:opacity-80 md:h-7" />
       {suffix && (
         <span className="text-sm font-semibold lowercase text-muted">{suffix}</span>
       )}

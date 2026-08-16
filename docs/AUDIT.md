@@ -4,10 +4,10 @@ Généré par `scripts/audit.mjs` (crawler Playwright sur http://localhost:3000)
 
 ## synthèse
 
-- pages internes crawlées : **33**
+- pages internes crawlées : **31**
 - pages en erreur (≠ 200) : **0**
 - pages avec erreurs JS console : **0**
-- liens externes détectés : **7** (non vérifiables depuis la
+- liens externes détectés : **31** (non vérifiables depuis la
   sandbox — voir section dédiée)
 
 ## pages internes
@@ -16,36 +16,34 @@ Généré par `scripts/audit.mjs` (crawler Playwright sur http://localhost:3000)
 | --- | --- | --- | --- | --- | --- | --- |
 | `/` | 200 | akelius — a better way to live | a better way to live | 0 | 0 | 0 |
 | `/recherche?ville=paris` | 200 | recherche — akelius | 16 logements à louer à paris | 0 | 0 | 0 |
-| `/recherche?ville=londres` | 200 | recherche — akelius | 4 logements à louer à londres | 0 | 0 | 0 |
-| `/recherche?ville=montreal` | 200 | recherche — akelius | 4 logements à louer à montréal | 0 | 0 | 0 |
-| `/bien/paris-15-rue-de-vaugirard-3p` | 200 | 3 pièces lumineux face au square Adolphe-Chérioux — akelius | 3 pièces lumineux face au square Adolphe-Chérioux | 0 | 0 | 0 |
-| `/pro` | 200 | espace pro — akelius | publiez vos biens, gérez vos locations | 0 | 0 | 0 |
-| `/pro/annonces` | 200 | mes annonces — akelius pro | mes annonces | 0 | 0 | 0 |
-| `/pro/annonces/nouvelle` | 200 | nouvelle annonce — akelius pro | nouvelle annonce | 0 | 0 | 0 |
-| `/bien/paris-16-rue-de-passy-2p` | 200 | 2 pièces rénové au cœur de Passy — akelius | 2 pièces rénové au cœur de Passy | 0 | 0 | 0 |
-| `/bien/paris-17-batignolles-4p` | 200 | 4 pièces familial aux Batignolles — akelius | 4 pièces familial aux Batignolles | 0 | 0 | 0 |
-| `/bien/paris-10-quai-de-valmy-3p` | 200 | 3 pièces face au canal Saint-Martin — akelius | 3 pièces face au canal Saint-Martin | 0 | 0 | 0 |
-| `/recherche` | 200 | recherche — akelius | 24 logements à louer | 0 | 0 | 0 |
-| `/bien/paris-3-bretagne-3p` | 200 | 3 pièces contemporain rue de Bretagne — akelius | 3 pièces contemporain rue de Bretagne | 0 | 0 | 0 |
-| `/bien/paris-18-caulaincourt-studio` | 200 | studio de charme sur les hauteurs de Montmartre — akelius | studio de charme sur les hauteurs de Montmartre | 0 | 0 | 0 |
-| `/bien/paris-4-archives-2p` | 200 | 2 pièces de caractère au cœur du Marais — akelius | 2 pièces de caractère au cœur du Marais | 0 | 0 | 0 |
-| `/bien/paris-11-oberkampf-2p` | 200 | 2 pièces esprit loft rue Oberkampf — akelius | 2 pièces esprit loft rue Oberkampf | 0 | 0 | 0 |
-| `/bien/paris-9-martyrs-2p` | 200 | 2 pièces au pied des commerces des Martyrs — akelius | 2 pièces au pied des commerces des Martyrs | 0 | 0 | 0 |
-| `/bien/paris-6-rennes-3p` | 200 | 3 pièces élégant entre Rennes et Saint-Germain — akelius | 3 pièces élégant entre Rennes et Saint-Germain | 0 | 0 | 0 |
-| `/bien/paris-5-mouffetard-studio` | 200 | studio rénové quartier Mouffetard — akelius | studio rénové quartier Mouffetard | 0 | 0 | 0 |
-| `/bien/paris-20-gambetta-2p` | 200 | 2 pièces au calme près de Gambetta — akelius | 2 pièces au calme près de Gambetta | 0 | 0 | 0 |
-| `/bien/paris-14-daguerre-3p` | 200 | 3 pièces familial rue Daguerre — akelius | 3 pièces familial rue Daguerre | 0 | 0 | 0 |
-| `/bien/paris-13-butte-aux-cailles-2p` | 200 | 2 pièces esprit village à la Butte-aux-Cailles — akelius | 2 pièces esprit village à la Butte-aux-Cailles | 0 | 0 | 0 |
-| `/bien/paris-12-faubourg-saint-antoine-4p` | 200 | 4 pièces en duplex, cour d’artisans — akelius | 4 pièces en duplex, cour d’artisans | 0 | 0 | 0 |
-| `/bien/paris-7-cler-3p` | 200 | 3 pièces de prestige rue Cler — akelius | 3 pièces de prestige rue Cler | 0 | 0 | 0 |
-| `/bien/londres-notting-hill-2p` | 200 | 2 pièces victorien à Notting Hill — akelius | 2 pièces victorien à Notting Hill | 0 | 0 | 0 |
-| `/bien/londres-camden-studio` | 200 | studio contemporain à Camden — akelius | studio contemporain à Camden | 0 | 0 | 0 |
-| `/bien/londres-kensington-3p` | 200 | 3 pièces classique à South Kensington — akelius | 3 pièces classique à South Kensington | 0 | 0 | 0 |
-| `/bien/londres-islington-2p` | 200 | 2 pièces au vert à Islington — akelius | 2 pièces au vert à Islington | 0 | 0 | 0 |
-| `/bien/montreal-plateau-4-et-demi` | 200 | 4 ½ ensoleillé sur le Plateau — akelius | 4 ½ ensoleillé sur le Plateau | 0 | 0 | 0 |
-| `/bien/montreal-griffintown-3-et-demi` | 200 | 3 ½ neuf à Griffintown — akelius | 3 ½ neuf à Griffintown | 0 | 0 | 0 |
-| `/bien/montreal-ville-marie-3-et-demi` | 200 | 3 ½ avec vue au centre-ville — akelius | 3 ½ avec vue au centre-ville | 0 | 0 | 0 |
-| `/bien/montreal-mile-end-5-et-demi` | 200 | 5 ½ créatif dans le Mile End — akelius | 5 ½ créatif dans le Mile End | 0 | 0 | 0 |
+| `/recherche?ville=londres` | 200 | recherche — akelius | 0 logement à louer à londres | 0 | 0 | 0 |
+| `/recherche?ville=new-york` | 200 | recherche — akelius | 0 logement à louer à new york | 0 | 0 | 0 |
+| `/pro` | 200 | back-office — akelius | gérez le parc, publiez les biens | 0 | 0 | 0 |
+| `/pro/annonces` | 200 | mes annonces — back-office akelius | mes annonces | 0 | 0 | 0 |
+| `/pro/annonces/nouvelle` | 200 | nouvelle annonce — back-office akelius | nouvelle annonce | 0 | 0 | 0 |
+| `/bien/175-rue-championnet-75018-paris-6301-a12` | 200 | 2 pièces – 175 rue Championnet, 75018 Paris — akelius | 2 pièces – 175 rue Championnet, 75018 Paris | 0 | 0 | 0 |
+| `/bien/28-rue-hermel-75018-paris-6302-112` | 200 | Studio/1 pièce – 28 rue Hermel, 75018 Paris — akelius | Studio/1 pièce – 28 rue Hermel, 75018 Paris | 0 | 0 | 0 |
+| `/bien/28-rue-hermel-75018-paris-6302-432` | 200 | Studio/1 pièce – 28 rue Hermel, 75018 Paris — akelius | Studio/1 pièce – 28 rue Hermel, 75018 Paris | 0 | 0 | 0 |
+| `/bien/28-rue-hermel-75018-paris-6302-512` | 200 | Studio/1 pièce – 28 rue Hermel, 75018 Paris — akelius | Studio/1 pièce – 28 rue Hermel, 75018 Paris | 0 | 0 | 0 |
+| `/recherche?ville=toronto` | 200 | recherche — akelius | 0 logement à louer à toronto | 0 | 0 | 0 |
+| `/recherche?ville=montreal` | 200 | recherche — akelius | 0 logement à louer à montréal | 0 | 0 | 0 |
+| `/recherche?ville=ottawa` | 200 | recherche — akelius | 0 logement à louer à ottawa | 0 | 0 | 0 |
+| `/recherche?ville=quebec` | 200 | recherche — akelius | 0 logement à louer à québec | 0 | 0 | 0 |
+| `/recherche?ville=boston` | 200 | recherche — akelius | 0 logement à louer à boston | 0 | 0 | 0 |
+| `/recherche?ville=washington` | 200 | recherche — akelius | 0 logement à louer à washington d.c. | 0 | 0 | 0 |
+| `/recherche` | 200 | recherche — akelius | 16 logements à louer | 0 | 0 | 0 |
+| `/bien/101-rue-la-fayette-75010-paris-6304-b31` | 200 | Studio/1 pièce – 101 rue La Fayette, 75010 Paris — akelius | Studio/1 pièce – 101 rue La Fayette, 75010 Paris | 0 | 0 | 0 |
+| `/bien/6-place-felix-eboue-75012-paris-6305-722` | 200 | 2 pièces – 6 place Félix Eboué, 75012 Paris — akelius | 2 pièces – 6 place Félix Eboué, 75012 Paris | 0 | 0 | 0 |
+| `/bien/11-bis-rue-de-l-amiral-mouchez-75013-paris-6314-313` | 200 | 2 pièces – 11 bis rue de l'Amiral Mouchez, 75013 Paris — akelius | 2 pièces – 11 bis rue de l'Amiral Mouchez, 75013 Paris | 0 | 0 | 0 |
+| `/bien/61-rue-didot-75014-paris-6320-a34` | 200 | Studio/1 pièce – 61 Rue Didot, 75014 Paris — akelius | Studio/1 pièce – 61 Rue Didot, 75014 Paris | 0 | 0 | 0 |
+| `/bien/3-rue-victor-hugo-92600-asnieres-sur-seine-6354-053` | 200 | Studio/1 pièce – 3 rue Victor Hugo, 92600 Asnières-sur-Seine — akelius | Studio/1 pièce – 3 rue Victor Hugo, 92600 Asnières-sur-Seine | 0 | 0 | 0 |
+| `/bien/17-rue-jessaint-75018-paris-6356-a41` | 200 | 2 pièces – 17 rue Jessaint, 75018 Paris — akelius | 2 pièces – 17 rue Jessaint, 75018 Paris | 0 | 0 | 0 |
+| `/bien/52-rue-eugene-carriere-75018-paris-6359-a23` | 200 | 2 pièces – 52 rue Eugène Carrière, 75018 Paris — akelius | 2 pièces – 52 rue Eugène Carrière, 75018 Paris | 0 | 0 | 0 |
+| `/bien/7-rue-de-la-montagne-sainte-genevieve-75005-paris-6368-a61` | 200 | Studio/1 pièce – 7 rue de la Montagne Sainte Genevieve, 75005 Paris — akelius | Studio/1 pièce – 7 rue de la Montagne Sainte Genevieve, 75005 Paris | 0 | 0 | 0 |
+| `/bien/18-rue-de-l-eglise-92200-neuilly-sur-seine-6369-a42` | 200 | 3 pièces – 18 rue de l'Eglise, 92200 Neuilly-sur-Seine — akelius | 3 pièces – 18 rue de l'Eglise, 92200 Neuilly-sur-Seine | 0 | 0 | 0 |
+| `/bien/30-rue-des-champs-92600-asnieres-sur-seine-6374-a22` | 200 | 3 pièces – 30 rue des Champs, 92600 Asnières-sur-Seine — akelius | 3 pièces – 30 rue des Champs, 92600 Asnières-sur-Seine | 0 | 0 | 0 |
+| `/bien/27-rue-jean-baptiste-clement-92100-boulogne-billancourt-6378-a32` | 200 | 2 pièces – 27 rue Jean-Baptiste Clement, 92100 Boulogne-Billancourt — akelius | 2 pièces – 27 rue Jean-Baptiste Clement, 92100 Boulogne-Billancourt | 0 | 0 | 0 |
+| `/bien/33-rue-lamarck-75018-paris-6380-a61` | 200 | 3 pièces – 33 rue Lamarck, 75018 Paris — akelius | 3 pièces – 33 rue Lamarck, 75018 Paris | 0 | 0 | 0 |
 | `/bien/paris-quartier-annonce` | 200 | annonce — akelius | bien introuvable | 0 | 0 | 0 |
 
 ## liens externes (footer « sites officiels », etc.)
@@ -56,13 +54,37 @@ externes : ces liens sont donc **à vérifier depuis un navigateur normal**
 
 | lien | présent sur |
 | --- | --- |
-| https://akelius.fr/en | footer — toutes les pages (33) |
-| https://akelius.fr/en/search/france/apartment/paris | footer — toutes les pages (33) |
-| https://www.akelius.com/en/akelius | footer — toutes les pages (33) |
-| https://www.akelius.fr/en/akelius/about | footer — toutes les pages (33) |
-| https://akelius.fr/en/contact/paris | footer — toutes les pages (33) |
-| https://www.residential-akelius.co.uk/ | footer — toutes les pages (33) |
-| https://www.akelius.fr/mentions-legales | footer — toutes les pages (33) |
+| https://akelius.fr/en | footer — toutes les pages (31) |
+| https://akelius.fr/en/search/france/apartment/paris | footer — toutes les pages (31) |
+| https://www.akelius.com/en/akelius | footer — toutes les pages (31) |
+| https://www.akelius.fr/en/akelius/about | footer — toutes les pages (31) |
+| https://akelius.fr/en/contact/paris | footer — toutes les pages (31) |
+| https://www.residential-akelius.co.uk/ | footer — toutes les pages (31) |
+| https://www.akelius.fr/mentions-legales | footer — toutes les pages (31) |
+| https://rent.akelius.com/en/search/united-kingdom/apartment/london | `/recherche?ville=londres` |
+| https://www.akelius-properties.us/searchlisting?citystate=NY | `/recherche?ville=new-york` |
+| https://akelius.fr/en/search/france/detail/6301_A12 | `/bien/175-rue-championnet-75018-paris-6301-a12` |
+| https://akelius.fr/en/search/france/detail/6302_112 | `/bien/28-rue-hermel-75018-paris-6302-112` |
+| https://akelius.fr/en/search/france/detail/6302_432 | `/bien/28-rue-hermel-75018-paris-6302-432` |
+| https://akelius.fr/en/search/france/detail/6302_512 | `/bien/28-rue-hermel-75018-paris-6302-512` |
+| https://rent.akelius.com/en/search/canada/apartment/toronto | `/recherche?ville=toronto` |
+| https://rent.akelius.com/en/search/canada/apartment/montreal | `/recherche?ville=montreal` |
+| https://rent.akelius.com/en/search/canada/apartment/ottawa | `/recherche?ville=ottawa` |
+| https://rent.akelius.com/en/search/canada/apartment/quebec%20city | `/recherche?ville=quebec` |
+| https://www.akelius-properties.us/searchlisting?citystate=MA | `/recherche?ville=boston` |
+| https://www.akelius-properties.us/ | `/recherche?ville=washington` |
+| https://akelius.fr/en/search/france/detail/6304_B31 | `/bien/101-rue-la-fayette-75010-paris-6304-b31` |
+| https://akelius.fr/en/search/france/detail/6305_722 | `/bien/6-place-felix-eboue-75012-paris-6305-722` |
+| https://akelius.fr/en/search/france/detail/6314_313 | `/bien/11-bis-rue-de-l-amiral-mouchez-75013-paris-6314-313` |
+| https://akelius.fr/en/search/france/detail/6320_A34 | `/bien/61-rue-didot-75014-paris-6320-a34` |
+| https://akelius.fr/en/search/france/detail/6354_053 | `/bien/3-rue-victor-hugo-92600-asnieres-sur-seine-6354-053` |
+| https://akelius.fr/en/search/france/detail/6356_A41 | `/bien/17-rue-jessaint-75018-paris-6356-a41` |
+| https://akelius.fr/en/search/france/detail/6359_A23 | `/bien/52-rue-eugene-carriere-75018-paris-6359-a23` |
+| https://akelius.fr/en/search/france/detail/6368_A61 | `/bien/7-rue-de-la-montagne-sainte-genevieve-75005-paris-6368-a61` |
+| https://akelius.fr/en/search/france/detail/6369_A42 | `/bien/18-rue-de-l-eglise-92200-neuilly-sur-seine-6369-a42` |
+| https://akelius.fr/en/search/france/detail/6374_A22 | `/bien/30-rue-des-champs-92600-asnieres-sur-seine-6374-a22` |
+| https://akelius.fr/en/search/france/detail/6378_A32 | `/bien/27-rue-jean-baptiste-clement-92100-boulogne-billancourt-6378-a32` |
+| https://akelius.fr/en/search/france/detail/6380_A61 | `/bien/33-rue-lamarck-75018-paris-6380-a61` |
 
 ## limites connues / dette
 

@@ -33,7 +33,7 @@ const SERVICES = [
   },
   {
     title: "présents dans 4 pays",
-    text: "des immeubles détenus et gérés en propre dans dix métropoles, de paris à new york — un seul interlocuteur.",
+    text: "des immeubles détenus et gérés en propre dans neuf métropoles, de paris à new york — un seul interlocuteur.",
     color: "var(--color-tile-orange)",
     icon: "M12 3a9 9 0 100 18 9 9 0 000-18zM3.6 9h16.8M3.6 15h16.8M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z",
   },
@@ -62,7 +62,7 @@ export default function Home() {
               a better way <br />to live
             </h1>
             <p className="mt-4 max-w-xl text-lg text-white/90">
-              des appartements rénovés avec soin, dans dix métropoles
+              des appartements rénovés avec soin, dans neuf métropoles
               d’europe et d’amérique du nord.
             </p>
           </Reveal>
@@ -81,7 +81,7 @@ export default function Home() {
         <div className="container-ak grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
           {[
             ["19 000", "appartements en propre"],
-            ["10", "villes dans le monde"],
+            ["9", "villes dans le monde"],
             ["24 h/24", "service locataire"],
             ["0 €", "frais d’agence"],
           ].map(([n, label], i) => (

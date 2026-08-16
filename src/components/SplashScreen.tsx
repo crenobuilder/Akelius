@@ -39,7 +39,7 @@ export default function SplashScreen() {
         ))}
       </div>
       <p className="splash-word">
-        <Wordmark className="text-3xl" />
+        <Wordmark className="h-9" />
       </p>
     </div>
   );

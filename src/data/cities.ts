@@ -1,11 +1,11 @@
 import type { CityMeta } from "@/lib/types";
 
 /*
-  Les dix villes du portefeuille réel d’Akelius Residential Property :
-  Paris, Londres, Toronto, Montréal, Ottawa, Québec, New York, Boston,
-  Washington D.C. et Austin.
-  Photos : placeholders libres de droits (Unsplash) — à remplacer par les
-  visuels officiels akelius lors de l’intégration finale.
+  Les 9 villes du sélecteur officiel akelius.fr
+  (endpoint files/v2/cities/cities.json — voir docs/SCRAPE-NOTES.md),
+  avec leurs vraies URLs de recherche officielles.
+  Photos de villes : placeholders libres de droits (Unsplash), à remplacer
+  par les visuels officiels lors de l’intégration finale.
 */
 export const CITIES: CityMeta[] = [
   {
@@ -18,8 +18,8 @@ export const CITIES: CityMeta[] = [
     zoom: 12,
     image:
       "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=80",
-    blurb: "haussmannien rénové, du marais à passy",
-    officialUrl: "https://akelius.fr/en/search/france/apartment/paris",
+    blurb: "du 18e à neuilly-sur-seine",
+    officialUrl: "https://rent.akelius.com/en/search/france/apartment/paris",
   },
   {
     slug: "londres",
@@ -32,7 +32,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1400&q=80",
     blurb: "de notting hill à islington",
-    officialUrl: "https://www.residential-akelius.co.uk",
+    officialUrl: "https://rent.akelius.com/en/search/united-kingdom/apartment/london",
   },
   {
     slug: "toronto",
@@ -45,7 +45,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1517090504586-fde19ea6066f?auto=format&fit=crop&w=1400&q=80",
     blurb: "d’annex à midtown",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://rent.akelius.com/en/search/canada/apartment/toronto",
   },
   {
     slug: "montreal",
@@ -58,7 +58,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1519178614-68673b201f36?auto=format&fit=crop&w=1400&q=80",
     blurb: "du plateau à griffintown",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://rent.akelius.com/en/search/canada/apartment/montreal",
   },
   {
     slug: "ottawa",
@@ -71,7 +71,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?auto=format&fit=crop&w=1400&q=80",
     blurb: "centretown et la capitale",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://rent.akelius.com/en/search/canada/apartment/ottawa",
   },
   {
     slug: "quebec",
@@ -84,7 +84,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1558489580-faa74691fdc5?auto=format&fit=crop&w=1400&q=80",
     blurb: "du vieux-québec à limoilou",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://rent.akelius.com/en/search/canada/apartment/quebec%20city",
   },
   {
     slug: "new-york",
@@ -97,7 +97,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=80",
     blurb: "de brooklyn à harlem",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://www.akelius-properties.us/searchlisting?citystate=NY",
   },
   {
     slug: "boston",
@@ -110,7 +110,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=1400&q=80",
     blurb: "back bay et south end",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://www.akelius-properties.us/searchlisting?citystate=MA",
   },
   {
     slug: "washington",
@@ -123,20 +123,7 @@ export const CITIES: CityMeta[] = [
     image:
       "https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1400&q=80",
     blurb: "dupont circle et columbia heights",
-    officialUrl: "https://www.akelius.com",
-  },
-  {
-    slug: "austin",
-    name: "austin",
-    country: "états-unis",
-    flag: "🇺🇸",
-    currency: "USD",
-    center: [30.2672, -97.7431],
-    zoom: 12,
-    image:
-      "https://images.unsplash.com/photo-1531218150217-54595bc2b934?auto=format&fit=crop&w=1400&q=80",
-    blurb: "downtown et south congress",
-    officialUrl: "https://www.akelius.com",
+    officialUrl: "https://www.akelius-properties.us/",
   },
 ];
 

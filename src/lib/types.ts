@@ -1,5 +1,6 @@
 export type Currency = "EUR" | "GBP" | "CAD" | "USD";
 
+/** les 9 villes du sélecteur officiel akelius (cities.json) */
 export type CitySlug =
   | "paris"
   | "londres"
@@ -9,8 +10,7 @@ export type CitySlug =
   | "quebec"
   | "new-york"
   | "boston"
-  | "washington"
-  | "austin";
+  | "washington";
 
 export type Dpe = "A" | "B" | "C" | "D" | "E" | "F" | "G";
 
@@ -31,15 +31,23 @@ export interface Listing {
   surface: number;
   rooms: number;
   bedrooms: number;
-  floor: number;
-  elevator: boolean;
-  furnished: boolean;
-  balcony: boolean;
+  floor: number | null;
+  elevator?: boolean;
+  furnished?: boolean;
+  balcony?: boolean;
   availableFrom: string; // ISO date
-  dpe: Dpe;
+  dpe?: Dpe;
   photos: string[];
   description: string;
   amenities: string[];
+  /** station de métro la plus proche (données officielles) */
+  station?: string;
+  constructionYear?: number;
+  deposit?: number;
+  /** loyer hors charges */
+  baseRent?: number;
+  /** annonce canonique sur le site officiel akelius */
+  officialUrl?: string;
   featured?: boolean;
   isNew?: boolean;
   /** annonce créée depuis l’espace pro (stockée en local) */

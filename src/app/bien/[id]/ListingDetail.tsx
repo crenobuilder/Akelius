@@ -62,15 +62,27 @@ export default function ListingDetail({ slug }: { slug: string }) {
   const photos = listing.photos.length > 0 ? listing.photos : [""];
 
   const facts: [string, string][] = [
-    ["surface", `${listing.surface} m²`],
+    ["surface", `${Math.round(listing.surface)} m²`],
     ["pièces", roomsLabel(listing.rooms)],
     ["chambres", String(listing.bedrooms)],
-    ["étage", listing.floor === 0 ? "rez-de-chaussée" : `${listing.floor}e`],
-    ["ascenseur", listing.elevator ? "oui" : "non"],
-    ["meublé", listing.furnished ? "oui" : "non"],
-    ["balcon", listing.balcony ? "oui" : "non"],
-    ["disponible", available ? "immédiatement" : formatDate(listing.availableFrom)],
   ];
+  if (listing.floor !== null && listing.floor !== undefined)
+    facts.push(["étage", listing.floor === 0 ? "rez-de-chaussée" : `${listing.floor}e`]);
+  if (listing.elevator !== undefined)
+    facts.push(["ascenseur", listing.elevator ? "oui" : "non"]);
+  if (listing.furnished !== undefined)
+    facts.push(["meublé", listing.furnished ? "oui" : "non"]);
+  if (listing.balcony !== undefined)
+    facts.push(["balcon", listing.balcony ? "oui" : "non"]);
+  if (listing.station) facts.push(["métro", listing.station]);
+  if (listing.constructionYear)
+    facts.push(["construction", String(listing.constructionYear)]);
+  if (listing.deposit)
+    facts.push(["dépôt de garantie", formatPrice(listing.deposit, listing.currency)]);
+  facts.push([
+    "disponible",
+    available ? "immédiatement" : formatDate(listing.availableFrom),
+  ]);
 
   return (
     <div className="pb-16">
@@ -154,23 +166,29 @@ export default function ListingDetail({ slug }: { slug: string }) {
             </>
           )}
 
-          <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">
-            diagnostic énergie
-          </h2>
-          <div className="mt-3 flex items-center gap-1.5">
-            {DPE_SCALE.map((d) => (
-              <span
-                key={d}
-                className={`flex items-center justify-center rounded-[var(--radius-ak)] font-bold text-white ${
-                  d === listing.dpe ? "h-11 w-11 text-base" : "h-8 w-8 text-xs opacity-45"
-                }`}
-                style={{ backgroundColor: DPE_COLORS[d] }}
-              >
-                {d}
-              </span>
-            ))}
-            <span className="ml-3 text-sm text-muted">classe {listing.dpe}</span>
-          </div>
+          {listing.dpe && (
+            <>
+              <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">
+                diagnostic énergie
+              </h2>
+              <div className="mt-3 flex items-center gap-1.5">
+                {DPE_SCALE.map((d) => (
+                  <span
+                    key={d}
+                    className={`flex items-center justify-center rounded-[var(--radius-ctl)] font-bold text-white ${
+                      d === listing.dpe
+                        ? "h-11 w-11 text-base"
+                        : "h-8 w-8 text-xs opacity-45"
+                    }`}
+                    style={{ backgroundColor: DPE_COLORS[d] }}
+                  >
+                    {d}
+                  </span>
+                ))}
+                <span className="ml-3 text-sm text-muted">classe {listing.dpe}</span>
+              </div>
+            </>
+          )}
 
           <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">localisation</h2>
           <div className="mt-3 h-[320px] overflow-hidden rounded-[var(--radius-ak)] border border-line">
@@ -263,6 +281,16 @@ export default function ListingDetail({ slug }: { slug: string }) {
             <p className="mt-1 text-muted">
               propriétaire-bailleur — location en direct, sans frais d’agence.
             </p>
+            {listing.officialUrl && (
+              <a
+                href={listing.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1 text-sm font-semibold lowercase text-brand-deep hover:underline"
+              >
+                voir l’annonce sur akelius.fr ↗
+              </a>
+            )}
           </div>
         </aside>
       </div>

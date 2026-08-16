@@ -102,7 +102,7 @@ export default function ProAnnoncesPage() {
                       <div className="min-w-0">
                         <p className="truncate font-semibold text-ink">{l.title}</p>
                         <p className="truncate text-xs lowercase text-muted">
-                          {l.district} · {l.surface} m²
+                          {l.district} · {Math.round(l.surface)} m²
                         </p>
                       </div>
                     </div>

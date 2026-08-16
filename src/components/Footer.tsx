@@ -45,9 +45,9 @@ export default function Footer() {
     <footer id="contact" className="border-t border-line bg-sand">
       <div className="container-ak grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.3fr_repeat(4,1fr)]">
         <div>
-          <Wordmark className="text-xl" />
+          <Wordmark className="h-6" />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-            des appartements rénovés avec soin, dans dix métropoles
+            des appartements rénovés avec soin, dans neuf métropoles
             d’europe et d’amérique du nord.
           </p>
           <p className="mt-4 text-sm font-semibold lowercase text-ink-soft">

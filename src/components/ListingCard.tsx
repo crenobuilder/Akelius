@@ -49,7 +49,7 @@ export default function ListingCard({ listing, onHover, highlighted }: Props) {
             <span className="ml-1 text-xs font-medium text-muted">/ mois cc</span>
           </p>
           <p className="shrink-0 text-sm font-semibold text-ink-soft">
-            {roomsLabel(listing.rooms)} · {listing.surface} m²
+            {roomsLabel(listing.rooms)} · {Math.round(listing.surface)} m²
           </p>
         </div>
         <h3 className="mt-1.5 line-clamp-1 text-[0.9375rem] font-semibold text-ink">
