@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/*
+  akelius design system — tokens
+  NOTE: approximation fidèle de l'identité akelius (minimalisme scandinave,
+  bas-de-casse, bleu signature). À remplacer par les tokens officiels
+  (polices propriétaires, couleurs exactes) lors de l'intégration finale.
+*/
+@theme {
+  --color-ink: #171717;
+  --color-ink-soft: #3f3d3a;
+  --color-muted: #716c66;
+  --color-paper: #ffffff;
+  --color-sand: #f6f5f2;
+  --color-sand-deep: #edebe6;
+  --color-line: #e6e3dd;
+  --color-brand: #0095d5;
+  --color-brand-deep: #006f9f;
+  --color-brand-wash: #eaf6fc;
+  --color-ok: #2e7d4f;
+  --color-warn: #b3541e;
+
+  --font-sans: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Arial, sans-serif;
+
+  --radius-ak: 2px;
+
+  --shadow-card: 0 1px 2px rgba(23, 23, 23, 0.05), 0 8px 24px rgba(23, 23, 23, 0.06);
+  --shadow-float: 0 2px 6px rgba(23, 23, 23, 0.08), 0 16px 40px rgba(23, 23, 23, 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01" on;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+@layer components {
+  .container-ak {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 76rem;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-ak {
+      padding-inline: 2rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-ak);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: lowercase;
+    padding: 0.875rem 1.5rem;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-brand-deep);
+  }
+  .btn-brand {
+    background: var(--color-brand);
+    color: #fff;
+  }
+  .btn-brand:hover {
+    background: var(--color-brand-deep);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: var(--color-muted);
+    margin-bottom: 0.375rem;
+  }
+  .field-input {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-ak);
+    background: #fff;
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink);
+    outline: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+  .field-input:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px var(--color-brand-wash);
+  }
+
+  .kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: lowercase;
+    color: var(--color-brand);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: #fff;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    color: var(--color-ink-soft);
+    text-transform: lowercase;
+  }
+}
+
+/* ---- leaflet price pins ---- */
+.price-pin {
+  background: transparent;
+  border: none;
+}
+.price-pin > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(23, 23, 23, 0.18);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+.price-pin:hover > span,
+.price-pin.is-active > span {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: #fff;
+  transform: translate(-50%, -100%) scale(1.08);
+  z-index: 500;
+}
+.leaflet-container {
+  font-family: var(--font-sans);
+  background: var(--color-sand);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-ak);
+  box-shadow: var(--shadow-float);
+  padding: 0;
+  overflow: hidden;
+}
+.leaflet-popup-content {
+  margin: 0;
+  width: 240px !important;
+}
