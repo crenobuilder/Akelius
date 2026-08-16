@@ -32,7 +32,7 @@ export default function ProAnnoncesPage() {
     <div className="container-ak py-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="kicker">espace pro</p>
+          <p className="kicker">back-office</p>
           <h1 className="mt-2 text-3xl font-extrabold lowercase tracking-tight text-ink">
             mes annonces
           </h1>

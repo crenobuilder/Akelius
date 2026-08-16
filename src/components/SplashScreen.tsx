@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TILE_COLORS } from "./Logo";
+import { TILE_COLORS, Wordmark } from "./Logo";
 
 const KEY = "akelius.splash.seen";
 
@@ -38,8 +38,8 @@ export default function SplashScreen() {
           />
         ))}
       </div>
-      <p className="splash-word text-2xl font-extrabold lowercase tracking-tight text-navy">
-        akelius
+      <p className="splash-word">
+        <Wordmark className="text-3xl" />
       </p>
     </div>
   );

@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "espace pro — akelius",
+  title: "back-office — akelius",
   description:
-    "Publiez et gérez vos annonces de location : création guidée, diffusion immédiate dans la recherche et sur la carte.",
+    "Outil interne des équipes akelius : publication et gestion des biens du parc, diffusion immédiate dans la recherche et sur la carte.",
 };
 
 const STEPS = [
@@ -15,8 +15,8 @@ const STEPS = [
   },
   {
     n: "02",
-    title: "ajoutez vos photos",
-    text: "glissez vos visuels, la première photo devient la vignette de l’annonce.",
+    title: "ajoutez les photos",
+    text: "glissez les visuels du bien, la première photo devient la vignette de l’annonce.",
   },
   {
     n: "03",
@@ -26,15 +26,15 @@ const STEPS = [
   {
     n: "04",
     title: "publiez",
-    text: "l’annonce apparaît immédiatement dans les résultats de recherche et sur la carte.",
+    text: "le bien apparaît immédiatement dans les résultats de recherche et sur la carte.",
   },
 ];
 
 const FEATURES = [
-  ["diffusion instantanée", "vos biens sont visibles dans la recherche et sur la carte dès la publication."],
-  ["brouillons", "préparez vos annonces à l’avance et publiez-les au bon moment."],
+  ["diffusion instantanée", "les biens sont visibles dans la recherche et sur la carte dès la publication."],
+  ["brouillons", "préparez les annonces à l’avance et publiez-les au bon moment."],
   ["statistiques", "vues, contacts et demandes de visite, bien par bien."],
-  ["multi-villes", "gérez un portefeuille réparti entre paris, londres et montréal."],
+  ["multi-villes", "gérez le parc réparti entre l’europe et l’amérique du nord."],
 ];
 
 export default function ProPage() {
@@ -43,22 +43,27 @@ export default function ProPage() {
       <section className="border-b border-line bg-sand">
         <div className="container-ak grid items-center gap-10 py-16 lg:grid-cols-2">
           <div>
-            <p className="kicker">espace professionnel</p>
+            <p className="kicker">back-office — réservé aux équipes akelius</p>
             <h1 className="mt-3 text-4xl font-extrabold lowercase leading-tight tracking-tight text-ink md:text-5xl">
-              publiez vos biens, <br />gérez vos locations
+              gérez le parc, <br />publiez les biens
             </h1>
             <p className="mt-4 max-w-md text-lg text-muted">
-              un outil simple pour les équipes de gestion : création d’annonce
-              guidée, diffusion immédiate, suivi des demandes.
+              l’outil interne des équipes de gestion akelius : création
+              d’annonce guidée, diffusion immédiate, suivi des demandes de
+              visite.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/pro/annonces/nouvelle" className="btn btn-brand">
-                publier une annonce
+                publier un bien
               </Link>
               <Link href="/pro/annonces" className="btn btn-ghost">
-                voir mes annonces
+                voir les annonces
               </Link>
             </div>
+            <p className="mt-6 text-xs text-muted">
+              démo : l’accès est ouvert. en production, connexion sso
+              d’entreprise réservée aux équipes akelius.
+            </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {FEATURES.map(([title, text]) => (
@@ -88,8 +93,8 @@ export default function ProPage() {
             </div>
           ))}
         </div>
-        <div className="mt-12 rounded-[var(--radius-ak)] bg-ink p-8 text-center text-white">
-          <p className="text-xl font-extrabold lowercase">prêt à publier votre premier bien ?</p>
+        <div className="mt-12 rounded-[var(--radius-ak)] bg-navy p-8 text-center text-white">
+          <p className="text-xl font-extrabold lowercase">un bien à mettre en ligne ?</p>
           <Link href="/pro/annonces/nouvelle" className="btn btn-brand mt-5">
             créer une annonce
           </Link>

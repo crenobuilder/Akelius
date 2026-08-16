@@ -1,6 +1,16 @@
-export type Currency = "EUR" | "GBP" | "CAD";
+export type Currency = "EUR" | "GBP" | "CAD" | "USD";
 
-export type CitySlug = "paris" | "londres" | "montreal";
+export type CitySlug =
+  | "paris"
+  | "londres"
+  | "toronto"
+  | "montreal"
+  | "ottawa"
+  | "quebec"
+  | "new-york"
+  | "boston"
+  | "washington"
+  | "austin";
 
 export type Dpe = "A" | "B" | "C" | "D" | "E" | "F" | "G";
 
@@ -42,8 +52,12 @@ export interface CityMeta {
   slug: CitySlug;
   name: string;
   country: string;
+  flag: string;
+  currency: Currency;
   center: [number, number];
   zoom: number;
   image: string;
   blurb: string;
+  /** page officielle akelius pour cette ville */
+  officialUrl: string;
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogoMark } from "./Logo";
+import { Wordmark } from "./Logo";
 
 const INTERNAL_COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -12,11 +12,11 @@ const INTERNAL_COLS: { title: string; links: { label: string; href: string }[] }
     ],
   },
   {
-    title: "professionnels",
+    title: "équipe akelius",
     links: [
-      { label: "espace pro", href: "/pro" },
-      { label: "publier une annonce", href: "/pro/annonces/nouvelle" },
-      { label: "gérer mes annonces", href: "/pro/annonces" },
+      { label: "back-office", href: "/pro" },
+      { label: "publier un bien", href: "/pro/annonces/nouvelle" },
+      { label: "gérer les annonces", href: "/pro/annonces" },
     ],
   },
   {
@@ -45,15 +45,10 @@ export default function Footer() {
     <footer id="contact" className="border-t border-line bg-sand">
       <div className="container-ak grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.3fr_repeat(4,1fr)]">
         <div>
-          <div className="flex items-center gap-2">
-            <LogoMark className="h-7 w-7 text-sm" />
-            <span className="text-xl font-extrabold lowercase tracking-tight text-navy">
-              akelius
-            </span>
-          </div>
+          <Wordmark className="text-xl" />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-            des appartements rénovés avec soin, dans les plus beaux quartiers
-            de paris, londres et montréal.
+            des appartements rénovés avec soin, dans dix métropoles
+            d’europe et d’amérique du nord.
           </p>
           <p className="mt-4 text-sm font-semibold lowercase text-ink-soft">
             a better way to live

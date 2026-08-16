@@ -10,11 +10,6 @@ import { CITIES } from "@/data/cities";
 const HERO_IMG =
   "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=2200&q=80";
 
-const FLAGS: Record<string, string> = {
-  paris: "🇫🇷",
-  londres: "🇬🇧",
-  montreal: "🇨🇦",
-};
 
 /* tuiles de services, iconographie et couleurs reprises du site akelius */
 const SERVICES = [
@@ -37,8 +32,8 @@ const SERVICES = [
     icon: "M4 20V4h2v14h14v2H4zm4-5l4-6 3 3 4-7 1.8 1-5.3 9-3-3-3 4.5L8 15z",
   },
   {
-    title: "présents dans 3 pays",
-    text: "des immeubles détenus et gérés en propre à paris, londres et montréal — un seul interlocuteur.",
+    title: "présents dans 4 pays",
+    text: "des immeubles détenus et gérés en propre dans dix métropoles, de paris à new york — un seul interlocuteur.",
     color: "var(--color-tile-orange)",
     icon: "M12 3a9 9 0 100 18 9 9 0 000-18zM3.6 9h16.8M3.6 15h16.8M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z",
   },
@@ -67,8 +62,8 @@ export default function Home() {
               a better way <br />to live
             </h1>
             <p className="mt-4 max-w-xl text-lg text-white/90">
-              des appartements rénovés avec soin, dans les plus beaux quartiers
-              de paris, londres et montréal.
+              des appartements rénovés avec soin, dans dix métropoles
+              d’europe et d’amérique du nord.
             </p>
           </Reveal>
           <Reveal delay={150} className="mt-8 max-w-4xl">
@@ -134,32 +129,32 @@ export default function Home() {
               nos villes
             </h2>
           </Reveal>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
             {CITIES.map((c, i) => {
               const count = LISTINGS.filter((l) => l.city === c.slug).length;
               return (
-                <Reveal key={c.slug} delay={i * 100}>
+                <Reveal key={c.slug} delay={(i % 5) * 80}>
                   <Link
                     href={`/recherche?ville=${c.slug}`}
                     className="card-lift group relative block overflow-hidden rounded-[var(--radius-ak)] shadow-[var(--shadow-card)]"
                   >
-                    <div className="aspect-[4/3] bg-sand-deep">
+                    <div className="aspect-[4/5] bg-sand-deep">
                       <SmartImage
                         src={c.image}
                         alt={c.name}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-                    <span className="absolute right-4 top-4 rounded-full bg-white/90 px-2.5 py-1 text-base shadow-sm backdrop-blur">
-                      {FLAGS[c.slug]}
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
+                    <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-0.5 text-sm shadow-sm backdrop-blur">
+                      {c.flag}
                     </span>
-                    <div className="absolute inset-x-0 bottom-0 p-5">
-                      <h3 className="text-xl font-extrabold lowercase text-white">
+                    <div className="absolute inset-x-0 bottom-0 p-4">
+                      <h3 className="text-lg font-extrabold lowercase leading-tight text-white">
                         {c.name}
                       </h3>
-                      <p className="mt-0.5 text-sm text-white/85">
-                        {count} logements · {c.blurb}
+                      <p className="mt-0.5 text-xs text-white/85">
+                        {count > 0 ? `${count} logements dans la démo` : c.blurb}
                       </p>
                     </div>
                   </Link>
@@ -200,25 +195,25 @@ export default function Home() {
       <section className="bg-navy py-16 text-white">
         <div className="container-ak flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <Reveal className="max-w-xl">
-            <p className="kicker !text-brand">espace professionnel</p>
+            <p className="kicker !text-brand">back-office — outil interne</p>
             <h2 className="mt-2 text-3xl font-extrabold lowercase tracking-tight">
-              gestionnaire ? publiez vos biens en quelques minutes
+              équipes akelius : publiez un bien en quelques minutes
             </h2>
             <p className="mt-3 text-white/75">
-              création d’annonce guidée, photos, loyer et disponibilité :
-              votre bien apparaît immédiatement dans la recherche et sur la
-              carte.
+              l’outil de gestion du parc : création d’annonce guidée, photos,
+              loyer et disponibilité. le bien apparaît immédiatement dans la
+              recherche et sur la carte.
             </p>
           </Reveal>
           <Reveal delay={120} className="flex gap-3">
             <Link href="/pro/annonces/nouvelle" className="btn btn-brand">
-              publier une annonce
+              publier un bien
             </Link>
             <Link
               href="/pro"
               className="btn !border-white/30 !text-white btn-ghost hover:!border-white hover:!bg-white/10"
             >
-              découvrir l’espace pro
+              découvrir le back-office
             </Link>
           </Reveal>
         </div>

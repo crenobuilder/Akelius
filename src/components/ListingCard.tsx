@@ -40,11 +40,6 @@ export default function ListingCard({ listing, onHover, highlighted }: Props) {
               meublé
             </span>
           )}
-          {listing.source === "pro" && (
-            <span className="rounded-full bg-tile-orange px-2.5 py-1 text-[0.6875rem] font-bold lowercase text-white shadow-sm">
-              annonce pro
-            </span>
-          )}
         </div>
       </div>
       <div className="p-4">

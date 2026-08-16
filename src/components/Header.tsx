@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-[1100] border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="container-ak flex h-16 items-center justify-between gap-6">
-        <Logo suffix={isPro ? "pro" : undefined} />
+        <Logo suffix={isPro ? "back-office" : undefined} />
 
         <nav className="hidden items-center gap-7 md:flex">
           {NAV.map((item) => (
@@ -42,7 +42,7 @@ export default function Header() {
             href={isPro ? "/pro/annonces" : "/pro"}
             className="btn btn-primary !px-4 !py-2.5"
           >
-            {isPro ? "mes annonces" : "espace pro"}
+            {isPro ? "mes annonces" : "back-office"}
           </Link>
         </div>
       </div>

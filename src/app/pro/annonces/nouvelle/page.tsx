@@ -7,15 +7,9 @@ import ListingCard from "@/components/ListingCard";
 import { CITIES, cityBySlug } from "@/data/cities";
 import { newProId, saveProListing } from "@/lib/proStore";
 import { slugify } from "@/lib/format";
-import type { CitySlug, Currency, Dpe, Listing } from "@/lib/types";
+import type { CitySlug, Dpe, Listing } from "@/lib/types";
 
 const STEPS = ["localisation", "caractéristiques", "photos", "loyer", "aperçu"] as const;
-
-const CURRENCY_BY_CITY: Record<CitySlug, Currency> = {
-  paris: "EUR",
-  londres: "GBP",
-  montreal: "CAD",
-};
 
 const DEFAULT_PHOTO =
   "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80";
@@ -93,7 +87,7 @@ export default function NouvelleAnnoncePage() {
       lng: Number(form.lng) || fallbackCenter[1],
       price: Number(form.price) || 0,
       charges: Number(form.charges) || 0,
-      currency: CURRENCY_BY_CITY[form.city],
+      currency: cityMeta?.currency ?? "EUR",
       surface: Number(form.surface) || 0,
       rooms: Number(form.rooms) || 1,
       bedrooms: Number(form.bedrooms) || 0,
@@ -152,7 +146,7 @@ export default function NouvelleAnnoncePage() {
 
   return (
     <div className="container-ak py-10">
-      <p className="kicker">espace pro</p>
+      <p className="kicker">back-office</p>
       <h1 className="mt-2 text-3xl font-extrabold lowercase tracking-tight text-ink">
         nouvelle annonce
       </h1>
@@ -464,7 +458,7 @@ export default function NouvelleAnnoncePage() {
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
                   <label className="field-label" htmlFor="f-price">
-                    loyer mensuel cc ({CURRENCY_BY_CITY[form.city]})
+                    loyer mensuel cc ({cityMeta?.currency ?? "EUR"})
                   </label>
                   <input
                     id="f-price"

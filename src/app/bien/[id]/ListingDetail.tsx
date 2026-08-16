@@ -97,11 +97,6 @@ export default function ListingDetail({ slug }: { slug: string }) {
               className="h-full w-full object-cover"
               loading="eager"
             />
-            {listing.source === "pro" && (
-              <span className="absolute left-4 top-4 rounded-[var(--radius-ak)] bg-warn px-2.5 py-1 text-xs font-bold lowercase text-white">
-                annonce pro
-              </span>
-            )}
             {photos.length > 1 && (
               <div className="absolute bottom-4 right-4 rounded-full bg-ink/70 px-3 py-1 text-xs font-semibold text-white">
                 {photoIdx + 1} / {photos.length}

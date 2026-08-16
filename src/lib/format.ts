@@ -4,6 +4,7 @@ const SYMBOLS: Record<Currency, string> = {
   EUR: "€",
   GBP: "£",
   CAD: "$",
+  USD: "$",
 };
 
 /** 1950 -> "1 950 €" — formatage manuel, identique serveur/client (pas de mismatch d’hydratation) */
@@ -11,7 +12,7 @@ export function formatPrice(value: number, currency: Currency = "EUR"): string {
   const grouped = value
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return currency === "GBP" ? `${SYMBOLS[currency]}${grouped}` : `${grouped} ${SYMBOLS[currency]}`;
+  return currency === "GBP" || currency === "USD" ? `${SYMBOLS[currency]}${grouped}` : `${grouped} ${SYMBOLS[currency]}`;
 }
 
 const MONTHS_FR = [

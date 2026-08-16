@@ -85,6 +85,9 @@ export default function SearchResults() {
   const city = cityBySlug(ville);
   const center: [number, number] = city?.center ?? [48.8606, 2.3376];
   const zoom = city?.zoom ?? 5;
+  const cityTotal = ville
+    ? [...LISTINGS, ...proListings].filter((l) => l.city === ville).length
+    : LISTINGS.length + proListings.length;
 
   const chips: { label: string; param: string }[] = [];
   if (surface) chips.push({ label: `≥ ${surface} m²`, param: "surface" });
@@ -160,14 +163,35 @@ export default function SearchResults() {
               </div>
             )}
             {results.length === 0 ? (
-              <div className="mt-10 rounded-[var(--radius-ak)] border border-line bg-sand p-8 text-center">
-                <p className="font-semibold lowercase text-ink">
-                  aucun logement ne correspond à votre recherche
-                </p>
-                <p className="mt-2 text-sm text-muted">
-                  élargissez votre budget ou réduisez la surface minimale.
-                </p>
-              </div>
+              cityTotal === 0 && city ? (
+                <div className="mt-10 rounded-[var(--radius-ak)] border border-line bg-sand p-8 text-center">
+                  <p className="text-2xl">{city.flag}</p>
+                  <p className="mt-2 font-semibold lowercase text-ink">
+                    les logements de {city.name} arrivent bientôt dans la démo
+                  </p>
+                  <p className="mt-2 text-sm text-muted">
+                    en attendant, les annonces de {city.name} sont disponibles
+                    sur le site officiel akelius.
+                  </p>
+                  <a
+                    href={city.officialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-ghost mt-5"
+                  >
+                    voir sur le site officiel ↗
+                  </a>
+                </div>
+              ) : (
+                <div className="mt-10 rounded-[var(--radius-ak)] border border-line bg-sand p-8 text-center">
+                  <p className="font-semibold lowercase text-ink">
+                    aucun logement ne correspond à votre recherche
+                  </p>
+                  <p className="mt-2 text-sm text-muted">
+                    élargissez votre budget ou réduisez la surface minimale.
+                  </p>
+                </div>
+              )
             ) : (
               <div className="mt-5 grid gap-5 pb-10 sm:grid-cols-2">
                 {results.map((l) => (

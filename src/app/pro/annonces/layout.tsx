@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "mes annonces — akelius pro",
+  title: "mes annonces — back-office akelius",
   description:
-    "Gérez vos annonces de location : statuts, publication, brouillons et statistiques.",
+    "Gestion des biens du parc : statuts, publication, brouillons et statistiques.",
 };
 
 export default function AnnoncesLayout({ children }: { children: React.ReactNode }) {
