@@ -108,13 +108,13 @@ export default function ListingDetail({ slug }: { slug: string }) {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-4 gap-2 lg:grid-cols-2 lg:grid-rows-2">
+          <div className="grid grid-cols-4 gap-2 lg:h-full lg:grid-cols-2 lg:grid-rows-2">
             {photos.slice(0, 4).map((p, i) => (
               <button
                 key={i}
                 onClick={() => setPhotoIdx(i)}
-                className={`relative aspect-[16/10] overflow-hidden rounded-[var(--radius-ak)] bg-sand-deep ${
-                  i === photoIdx ? "ring-2 ring-brand" : ""
+                className={`relative aspect-[16/10] overflow-hidden rounded-[var(--radius-ctl)] bg-sand-deep transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] lg:aspect-auto lg:h-full ${
+                  i === photoIdx ? "ring-2 ring-brand ring-offset-2" : ""
                 }`}
                 aria-label={`photo ${i + 1}`}
               >

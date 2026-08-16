@@ -48,6 +48,18 @@ L'identité reprend les codes d'Akelius — minimalisme scandinave, bas-de-casse
 bleu signature — en approximation : brancher les tokens officiels suffit à
 aligner tout le site.
 
+## Déploiement (staging → prod)
+
+Voir [`docs/DEPLOY.md`](docs/DEPLOY.md) : la branche de travail sert de
+staging via les déploiements *Preview* Vercel ; la production (`main`)
+n'est touchée qu'après validation.
+
+## Audit
+
+`node scripts/audit.mjs` (serveur lancé au préalable) crawle tout le site
+et génère [`docs/AUDIT.md`](docs/AUDIT.md) : statuts HTTP, liens internes
+et externes, erreurs console, h1/titres, alt manquants.
+
 ## Feuille de route
 
 Voir [`docs/PLAN.md`](docs/PLAN.md) : plan d'action produit, lots restants

@@ -164,11 +164,7 @@ export default function NouvelleAnnoncePage() {
             <button
               onClick={() => i < step && setStep(i)}
               className={`chip ${
-                i === step
-                  ? "!border-brand !bg-brand !text-white"
-                  : i < step
-                    ? "!border-brand-deep text-brand-deep"
-                    : ""
+                i === step ? "chip-on" : i < step ? "!text-brand-deep" : ""
               }`}
             >
               {i + 1}. {label}

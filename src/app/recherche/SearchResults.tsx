@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import ListingCard from "@/components/ListingCard";
 import SearchBar from "@/components/SearchBar";
+import Loader from "@/components/Loader";
 import { LISTINGS } from "@/data/listings";
 import { cityBySlug } from "@/data/cities";
 import { getPublishedProListings } from "@/lib/proStore";
@@ -13,8 +14,8 @@ import type { Listing } from "@/lib/types";
 const ListingsMap = dynamic(() => import("@/components/ListingsMap"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-full w-full items-center justify-center bg-sand text-sm lowercase text-muted">
-      chargement de la carte…
+    <div className="flex h-full w-full items-center justify-center bg-sand">
+      <Loader label="chargement de la carte…" />
     </div>
   ),
 });
@@ -148,7 +149,7 @@ export default function SearchResults() {
                 {chips.map((c) => (
                   <button
                     key={c.param}
-                    className="chip hover:border-ink"
+                    className="chip"
                     onClick={() => removeChip(c.param)}
                     title="retirer ce filtre"
                   >

@@ -17,9 +17,9 @@ export default function ListingCard({ listing, onHover, highlighted }: Props) {
       href={`/bien/${listing.slug}`}
       onMouseEnter={() => onHover?.(listing.id)}
       onMouseLeave={() => onHover?.(null)}
-      className={`group block overflow-hidden rounded-[var(--radius-ak)] border bg-paper transition-shadow ${
+      className={`card-lift group block overflow-hidden rounded-[var(--radius-ak)] border bg-paper ${
         highlighted
-          ? "border-brand shadow-[var(--shadow-float)]"
+          ? "border-brand shadow-[var(--shadow-float)] -translate-y-1"
           : "border-line shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-float)]"
       }`}
     >
@@ -31,17 +31,17 @@ export default function ListingCard({ listing, onHover, highlighted }: Props) {
         />
         <div className="absolute left-3 top-3 flex gap-2">
           {listing.isNew && (
-            <span className="rounded-[var(--radius-ak)] bg-brand px-2 py-1 text-[0.6875rem] font-bold lowercase text-white">
+            <span className="rounded-full bg-brand px-2.5 py-1 text-[0.6875rem] font-bold lowercase text-white shadow-sm">
               nouveau
             </span>
           )}
           {listing.furnished && (
-            <span className="rounded-[var(--radius-ak)] bg-ink/80 px-2 py-1 text-[0.6875rem] font-bold lowercase text-white">
+            <span className="rounded-full bg-ink/75 px-2.5 py-1 text-[0.6875rem] font-bold lowercase text-white shadow-sm backdrop-blur">
               meublé
             </span>
           )}
           {listing.source === "pro" && (
-            <span className="rounded-[var(--radius-ak)] bg-warn px-2 py-1 text-[0.6875rem] font-bold lowercase text-white">
+            <span className="rounded-full bg-tile-orange px-2.5 py-1 text-[0.6875rem] font-bold lowercase text-white shadow-sm">
               annonce pro
             </span>
           )}

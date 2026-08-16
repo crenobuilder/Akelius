@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 
 const NAV = [
   { href: "/recherche?ville=paris", label: "louer" },
@@ -14,24 +15,16 @@ export default function Header() {
   const isPro = pathname.startsWith("/pro");
 
   return (
-    <header className="sticky top-0 z-[1100] border-b border-line bg-paper/95 backdrop-blur">
+    <header className="sticky top-0 z-[1100] border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="container-ak flex h-16 items-center justify-between gap-6">
-        <Link href="/" className="flex items-baseline gap-1 select-none">
-          <span className="text-[1.45rem] font-extrabold lowercase tracking-tight text-ink">
-            akelius
-          </span>
-          <span className="h-2 w-2 rounded-full bg-brand" aria-hidden />
-          {isPro && (
-            <span className="ml-2 text-sm font-semibold lowercase text-muted">pro</span>
-          )}
-        </Link>
+        <Logo suffix={isPro ? "pro" : undefined} />
 
         <nav className="hidden items-center gap-7 md:flex">
           {NAV.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="text-[0.9375rem] font-medium lowercase text-ink-soft transition-colors hover:text-brand"
+              className="nav-link text-[0.9375rem] font-medium lowercase text-ink-soft transition-colors hover:text-navy"
             >
               {item.label}
             </Link>

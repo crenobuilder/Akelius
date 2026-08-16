@@ -45,7 +45,7 @@ export default function ProPage() {
           <div>
             <p className="kicker">espace professionnel</p>
             <h1 className="mt-3 text-4xl font-extrabold lowercase leading-tight tracking-tight text-ink md:text-5xl">
-              publiez vos biens,<br />gérez vos locations
+              publiez vos biens, <br />gérez vos locations
             </h1>
             <p className="mt-4 max-w-md text-lg text-muted">
               un outil simple pour les équipes de gestion : création d’annonce

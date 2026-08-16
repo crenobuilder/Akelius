@@ -125,13 +125,13 @@ export default function ProAnnoncesPage() {
                     <div className="flex flex-wrap gap-2 text-xs">
                       <Link
                         href={`/bien/${l.slug}`}
-                        className="chip hover:border-ink"
+                        className="chip"
                         title="voir l’annonce"
                       >
                         voir
                       </Link>
                       <button
-                        className="chip hover:border-ink"
+                        className="chip"
                         onClick={() =>
                           setProListingStatus(
                             l.id,
@@ -142,7 +142,7 @@ export default function ProAnnoncesPage() {
                         {l.status === "publiee" ? "dépublier" : "publier"}
                       </button>
                       <button
-                        className="chip hover:!border-warn hover:text-warn"
+                        className="chip hover:!bg-warn/15 hover:!text-warn"
                         onClick={() => {
                           if (confirm("supprimer cette annonce ?")) deleteProListing(l.id);
                         }}
