@@ -1,13 +1,19 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect, useMemo, useRef } from "react";
+import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useRouter } from "next/navigation";
 import type { Listing } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
-import Link from "next/link";
-import SmartImage from "./SmartImage";
+
+export interface MapBounds {
+  south: number;
+  west: number;
+  north: number;
+  east: number;
+}
 
 interface Props {
   listings: Listing[];
@@ -15,6 +21,10 @@ interface Props {
   zoom: number;
   highlightedId?: string | null;
   onPinHover?: (id: string | null) => void;
+  /** notifié à chaque déplacement/zoom de la carte */
+  onBoundsChange?: (b: MapBounds) => void;
+  /** recadre la carte quand cette clé change (critères de recherche) */
+  fitKey?: string;
   className?: string;
 }
 
@@ -26,13 +36,36 @@ function pinIcon(listing: Listing, active: boolean) {
   });
 }
 
-function FitBounds({ listings }: { listings: Listing[] }) {
+function FitBounds({ listings, fitKey }: { listings: Listing[]; fitKey?: string }) {
   const map = useMap();
+  const listingsRef = useRef(listings);
+  listingsRef.current = listings;
+
   useEffect(() => {
-    if (listings.length === 0) return;
-    const bounds = L.latLngBounds(listings.map((l) => [l.lat, l.lng] as [number, number]));
+    const current = listingsRef.current;
+    if (current.length === 0) return;
+    const bounds = L.latLngBounds(current.map((l) => [l.lat, l.lng] as [number, number]));
     map.fitBounds(bounds, { padding: [56, 56], maxZoom: 15 });
-  }, [map, listings]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, fitKey]);
+  return null;
+}
+
+function BoundsReporter({ onChange }: { onChange?: (b: MapBounds) => void }) {
+  const map = useMapEvents({
+    moveend: () => report(),
+    zoomend: () => report(),
+  });
+  function report() {
+    if (!onChange) return;
+    const b = map.getBounds();
+    onChange({
+      south: b.getSouth(),
+      west: b.getWest(),
+      north: b.getNorth(),
+      east: b.getEast(),
+    });
+  }
   return null;
 }
 
@@ -42,8 +75,12 @@ export default function ListingsMap({
   zoom,
   highlightedId,
   onPinHover,
+  onBoundsChange,
+  fitKey,
   className,
 }: Props) {
+  const router = useRouter();
+
   const markers = useMemo(
     () =>
       listings.map((l) => (
@@ -54,29 +91,11 @@ export default function ListingsMap({
           eventHandlers={{
             mouseover: () => onPinHover?.(l.id),
             mouseout: () => onPinHover?.(null),
+            click: () => router.push(`/bien/${l.slug}`),
           }}
-        >
-          <Popup closeButton={false} offset={[0, -34]}>
-            <Link href={`/bien/${l.slug}`} className="block bg-white">
-              <div className="aspect-[16/10] w-full overflow-hidden bg-[#edebe6]">
-                <SmartImage
-                  src={l.photos[0]}
-                  alt={l.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="p-2.5">
-                <p className="text-sm font-bold text-[#171717]">
-                  {formatPrice(l.price, l.currency)}
-                  <span className="ml-1 text-xs font-normal text-[#716c66]">/ mois</span>
-                </p>
-                <p className="mt-0.5 line-clamp-1 text-xs text-[#3f3d3a]">{l.title}</p>
-              </div>
-            </Link>
-          </Popup>
-        </Marker>
+        />
       )),
-    [listings, highlightedId, onPinHover]
+    [listings, highlightedId, onPinHover, router]
   );
 
   return (
@@ -88,8 +107,10 @@ export default function ListingsMap({
         className="h-full w-full"
         attributionControl={false}
       >
-        <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-        <FitBounds listings={listings} />
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png" />
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png" />
+        <FitBounds listings={listings} fitKey={fitKey} />
+        <BoundsReporter onChange={onBoundsChange} />
         {markers}
       </MapContainer>
     </div>

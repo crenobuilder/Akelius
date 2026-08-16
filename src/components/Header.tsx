@@ -18,10 +18,17 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[1100] border-b border-line bg-paper/90 backdrop-blur-md">
-      <div className="container-ak flex h-16 items-center justify-between gap-6">
-        <Logo suffix={isPro ? "back-office" : undefined} />
+      <div className="container-ak relative flex h-16 items-center justify-between">
+        {/* gauche : logo */}
+        <div className="flex h-10 items-center">
+          <Logo suffix={isPro ? "back-office" : undefined} />
+        </div>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        {/* centre : navigation, réellement centrée dans la page */}
+        <nav
+          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-8 lg:flex"
+          aria-label="navigation principale"
+        >
           {nav.map((item) => (
             <Link
               key={item.label}
@@ -33,10 +40,10 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          {/* sélecteur de langue */}
+        {/* droite : langues + action, hauteurs alignées */}
+        <div className="flex h-10 items-center gap-3">
           <div
-            className="flex items-center rounded-full bg-fill p-0.5"
+            className="flex h-9 items-center rounded-full bg-fill p-1"
             role="group"
             aria-label="langue"
           >
@@ -45,7 +52,7 @@ export default function Header() {
                 key={l}
                 onClick={() => setLang(l)}
                 aria-pressed={lang === l}
-                className={`rounded-full px-2.5 py-1 text-xs font-bold uppercase transition-colors ${
+                className={`flex h-7 items-center rounded-full px-2.5 text-[0.6875rem] font-bold uppercase tracking-wide transition-colors ${
                   lang === l ? "bg-navy text-white" : "text-muted hover:text-ink"
                 }`}
               >
@@ -56,7 +63,7 @@ export default function Header() {
 
           <Link
             href="/recherche?ville=paris"
-            className="btn btn-primary hidden !px-4 !py-2.5 sm:inline-flex"
+            className="btn btn-primary hidden h-9 !px-4 !py-0 text-sm sm:inline-flex"
           >
             {t("nav.find")}
           </Link>
