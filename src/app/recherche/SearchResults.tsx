@@ -9,30 +9,32 @@ import Loader from "@/components/Loader";
 import { LISTINGS } from "@/data/listings";
 import { cityBySlug } from "@/data/cities";
 import { getPublishedProListings } from "@/lib/proStore";
+import { useI18n } from "@/lib/i18n";
 import type { Listing } from "@/lib/types";
 
 const ListingsMap = dynamic(() => import("@/components/ListingsMap"), {
   ssr: false,
   loading: () => (
     <div className="flex h-full w-full items-center justify-center bg-sand">
-      <Loader label="chargement de la carte…" />
+      <Loader />
     </div>
   ),
 });
 
 type SortKey = "pertinence" | "prix-asc" | "prix-desc" | "surface-desc" | "nouveautes";
 
-const SORTS: { key: SortKey; label: string }[] = [
-  { key: "pertinence", label: "pertinence" },
-  { key: "prix-asc", label: "prix croissant" },
-  { key: "prix-desc", label: "prix décroissant" },
-  { key: "surface-desc", label: "surface" },
-  { key: "nouveautes", label: "nouveautés" },
+const SORTS: { key: SortKey; labelKey: string }[] = [
+  { key: "pertinence", labelKey: "sort.relevance" },
+  { key: "prix-asc", labelKey: "sort.priceAsc" },
+  { key: "prix-desc", labelKey: "sort.priceDesc" },
+  { key: "surface-desc", labelKey: "sort.surface" },
+  { key: "nouveautes", labelKey: "sort.new" },
 ];
 
 export default function SearchResults() {
   const params = useSearchParams();
   const router = useRouter();
+  const { t } = useI18n();
 
   const ville = params.get("ville") ?? "";
   const surface = Number(params.get("surface")) || 0;
@@ -109,14 +111,14 @@ export default function SearchResults() {
             className="btn btn-ghost !px-4 !py-2.5 lg:hidden"
             onClick={() => setFiltersOpen((v) => !v)}
           >
-            filtres
+            {t("filters")}
           </button>
           <div className={`${filtersOpen ? "block" : "hidden"} w-full lg:block lg:flex-1`}>
             <SearchBar variant="compact" />
           </div>
           <div className="ml-auto flex items-center gap-2">
             <label htmlFor="sort" className="text-xs lowercase text-muted">
-              trier par
+              {t("sort.label")}
             </label>
             <select
               id="sort"
@@ -126,7 +128,7 @@ export default function SearchResults() {
             >
               {SORTS.map((s) => (
                 <option key={s.key} value={s.key}>
-                  {s.label}
+                  {t(s.labelKey)}
                 </option>
               ))}
             </select>
@@ -144,8 +146,8 @@ export default function SearchResults() {
         >
           <div className="px-5 py-5 md:px-7">
             <h1 className="text-xl font-extrabold lowercase tracking-tight text-ink">
-              {results.length} logement{results.length > 1 ? "s" : ""} à louer
-              {city ? ` à ${city.name}` : ""}
+              {t(results.length > 1 ? "results.many" : "results.one", { n: results.length })}
+              {city ? ` ${t("results.in")} ${city.name}` : ""}
             </h1>
             {chips.length > 0 && (
               <div className="mt-3 flex flex-wrap gap-2">
@@ -154,7 +156,7 @@ export default function SearchResults() {
                     key={c.param}
                     className="chip"
                     onClick={() => removeChip(c.param)}
-                    title="retirer ce filtre"
+                    title={t("chip.remove")}
                   >
                     {c.label}
                     <span aria-hidden>×</span>
@@ -167,11 +169,10 @@ export default function SearchResults() {
                 <div className="mt-10 rounded-[var(--radius-ak)] border border-line bg-sand p-8 text-center">
                   <p className="text-2xl">{city.flag}</p>
                   <p className="mt-2 font-semibold lowercase text-ink">
-                    les logements de {city.name} arrivent bientôt dans la démo
+                    {t("emptyCity.title", { city: city.name })}
                   </p>
                   <p className="mt-2 text-sm text-muted">
-                    en attendant, les annonces de {city.name} sont disponibles
-                    sur le site officiel akelius.
+                    {t("emptyCity.sub", { city: city.name })}
                   </p>
                   <a
                     href={city.officialUrl}
@@ -179,17 +180,13 @@ export default function SearchResults() {
                     rel="noopener noreferrer"
                     className="btn btn-ghost mt-5"
                   >
-                    voir sur le site officiel ↗
+                    {t("emptyCity.cta")}
                   </a>
                 </div>
               ) : (
                 <div className="mt-10 rounded-[var(--radius-ak)] border border-line bg-sand p-8 text-center">
-                  <p className="font-semibold lowercase text-ink">
-                    aucun logement ne correspond à votre recherche
-                  </p>
-                  <p className="mt-2 text-sm text-muted">
-                    élargissez votre budget ou réduisez la surface minimale.
-                  </p>
+                  <p className="font-semibold lowercase text-ink">{t("empty.title")}</p>
+                  <p className="mt-2 text-sm text-muted">{t("empty.sub")}</p>
                 </div>
               )
             ) : (
@@ -228,7 +225,7 @@ export default function SearchResults() {
           className="btn btn-primary absolute bottom-5 left-1/2 z-[1000] -translate-x-1/2 shadow-[var(--shadow-float)] lg:hidden"
           onClick={() => setMobileView((v) => (v === "liste" ? "carte" : "liste"))}
         >
-          {mobileView === "liste" ? "voir la carte" : "voir la liste"}
+          {mobileView === "liste" ? t("view.map") : t("view.list")}
         </button>
       </div>
     </div>

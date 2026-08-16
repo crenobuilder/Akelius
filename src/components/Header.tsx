@@ -3,16 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
-
-const NAV = [
-  { href: "/recherche?ville=paris", label: "louer" },
-  { href: "/#villes", label: "nos villes" },
-  { href: "/#services", label: "services" },
-];
+import { LANGS, useI18n } from "@/lib/i18n";
 
 export default function Header() {
   const pathname = usePathname();
   const isPro = pathname.startsWith("/pro");
+  const { lang, setLang, t } = useI18n();
+
+  const nav = [
+    { href: "/recherche?ville=paris", label: t("nav.rent") },
+    { href: "/#villes", label: t("nav.cities") },
+    { href: "/#services", label: t("nav.services") },
+  ];
 
   return (
     <header className="sticky top-0 z-[1100] border-b border-line bg-paper/90 backdrop-blur-md">
@@ -20,7 +22,7 @@ export default function Header() {
         <Logo suffix={isPro ? "back-office" : undefined} />
 
         <nav className="hidden items-center gap-7 md:flex">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.label}
               href={item.href}
@@ -32,17 +34,31 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* sélecteur de langue */}
+          <div
+            className="flex items-center rounded-full bg-fill p-0.5"
+            role="group"
+            aria-label="langue"
+          >
+            {LANGS.map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                aria-pressed={lang === l}
+                className={`rounded-full px-2.5 py-1 text-xs font-bold uppercase transition-colors ${
+                  lang === l ? "bg-navy text-white" : "text-muted hover:text-ink"
+                }`}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+
           <Link
             href="/recherche?ville=paris"
-            className="btn btn-ghost hidden !px-4 !py-2.5 sm:inline-flex"
+            className="btn btn-primary hidden !px-4 !py-2.5 sm:inline-flex"
           >
-            trouver un logement
-          </Link>
-          <Link
-            href={isPro ? "/pro/annonces" : "/pro"}
-            className="btn btn-primary !px-4 !py-2.5"
-          >
-            {isPro ? "mes annonces" : "back-office"}
+            {t("nav.find")}
           </Link>
         </div>
       </div>

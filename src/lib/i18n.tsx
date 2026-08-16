@@ -1,0 +1,437 @@
+"use client";
+
+import { createContext, useContext, useEffect, useState } from "react";
+import { LANGS, type Lang } from "./compose";
+
+export { LANGS, roomsLabelLang, formatDateLang, listingTitle, listingDescription } from "./compose";
+export type { Lang } from "./compose";
+
+const KEY = "akelius.lang";
+
+/* ---------------------------------------------------------------- dictionnaires */
+
+const DICT: Record<Lang, Record<string, string>> = {
+  fr: {
+    "nav.rent": "louer",
+    "nav.cities": "nos villes",
+    "nav.services": "services",
+    "nav.find": "trouver un logement",
+    "hero.kicker": "location d’appartements",
+    "hero.sub":
+      "des appartements rénovés avec soin, dans neuf métropoles d’europe et d’amérique du nord.",
+    "stats.units": "appartements en propre",
+    "stats.cities": "villes dans le monde",
+    "stats.service": "service locataire",
+    "stats.fees": "frais d’agence",
+    "featured.kicker": "sélection",
+    "featured.title": "biens à la une",
+    "featured.all": "voir toutes les annonces →",
+    "cities.kicker": "où nous trouver",
+    "cities.title": "nos villes",
+    "cities.count": "{n} logements dans la démo",
+    "services.kicker": "pourquoi akelius",
+    "services.title": "louer en direct auprès du propriétaire",
+    "svc1.title": "des logements rénovés",
+    "svc1.text":
+      "chaque appartement est remis à neuf avant votre arrivée : cuisine, salle de bains, sols et peintures.",
+    "svc2.title": "un service qui répond",
+    "svc2.text":
+      "une équipe locale joignable 24 h/24 pour les urgences, et un suivi des demandes en ligne.",
+    "svc3.title": "sans frais cachés",
+    "svc3.text":
+      "des loyers clairs, charges détaillées, dossier 100 % en ligne et état des lieux transparent.",
+    "svc4.title": "présents dans 4 pays",
+    "svc4.text":
+      "des immeubles détenus et gérés en propre dans neuf métropoles, de paris à new york — un seul interlocuteur.",
+    "search.city": "ville",
+    "search.surface": "surface min (m²)",
+    "search.budget": "budget max / mois",
+    "search.rooms": "pièces min",
+    "search.any": "indifférent",
+    "search.studio": "studio et +",
+    "search.roomsN": "{n} pièces et +",
+    "search.go": "rechercher",
+    "search.exSurface": "ex. 40",
+    "search.exBudget": "ex. 2 000",
+    "results.one": "{n} logement à louer",
+    "results.many": "{n} logements à louer",
+    "results.in": "à",
+    "sort.label": "trier par",
+    "sort.relevance": "pertinence",
+    "sort.priceAsc": "prix croissant",
+    "sort.priceDesc": "prix décroissant",
+    "sort.surface": "surface",
+    "sort.new": "nouveautés",
+    "filters": "filtres",
+    "chip.remove": "retirer ce filtre",
+    "empty.title": "aucun logement ne correspond à votre recherche",
+    "empty.sub": "élargissez votre budget ou réduisez la surface minimale.",
+    "emptyCity.title": "les logements de {city} arrivent bientôt dans la démo",
+    "emptyCity.sub":
+      "en attendant, les annonces de {city} sont disponibles sur le site officiel akelius.",
+    "emptyCity.cta": "voir sur le site officiel ↗",
+    "map.loading": "chargement de la carte…",
+    "view.map": "voir la carte",
+    "view.list": "voir la liste",
+    "card.month": "/ mois cc",
+    "card.new": "nouveau",
+    "card.furnished": "meublé",
+    "detail.home": "accueil",
+    "detail.desc": "description",
+    "detail.amen": "à savoir",
+    "detail.dpe": "diagnostic énergie",
+    "detail.dpeClass": "classe {c}",
+    "detail.loc": "localisation",
+    "f.surface": "surface",
+    "f.rooms": "pièces",
+    "f.bedrooms": "chambres",
+    "f.floor": "étage",
+    "f.ground": "rez-de-chaussée",
+    "f.elevator": "ascenseur",
+    "f.furnished": "meublé",
+    "f.balcony": "balcon",
+    "f.metro": "métro",
+    "f.built": "construction",
+    "f.deposit": "dépôt de garantie",
+    "f.available": "disponible",
+    "f.now": "immédiatement",
+    "f.on": "le {d}",
+    "yes": "oui",
+    "no": "non",
+    "detail.charges": "dont {x} de charges",
+    "detail.availNow": "disponible immédiatement",
+    "detail.availOn": "disponible le {d}",
+    "detail.visit": "planifier une visite",
+    "detail.name": "nom",
+    "detail.namePh": "votre nom",
+    "detail.email": "e-mail",
+    "detail.msg": "message",
+    "detail.msgDefault": "bonjour, je souhaite visiter « {t} ».",
+    "detail.reply": "réponse sous 24 h — sans engagement",
+    "detail.sent": "demande envoyée ✓",
+    "detail.sentSub":
+      "notre équipe locale vous recontacte sous 24 h pour organiser la visite.",
+    "detail.owner": "propriétaire-bailleur — location en direct, sans frais d’agence.",
+    "detail.official": "voir l’annonce sur akelius.fr ↗",
+    "detail.pdf": "télécharger la fiche pdf",
+    "detail.similar": "dans le même quartier",
+    "detail.notfound": "bien introuvable",
+    "detail.notfoundSub": "cette annonce n’existe plus ou n’a pas encore été publiée.",
+    "detail.back": "retour à la recherche",
+    "footer.blurb":
+      "des appartements rénovés avec soin, dans neuf métropoles d’europe et d’amérique du nord.",
+    "footer.rent": "louer",
+    "footer.team": "équipe akelius",
+    "footer.about": "akelius",
+    "footer.official": "sites officiels",
+    "footer.services": "nos services",
+    "footer.cities": "nos villes",
+    "footer.contact": "contact",
+    "footer.backoffice": "back-office",
+    "footer.publish": "publier un bien",
+    "footer.manage": "gérer les annonces",
+    "footer.inCity": "appartements à {city}",
+    "footer.allListings": "toutes nos annonces",
+    "footer.disclaimer":
+      "maquette de refonte non officielle — démonstration produit, non affiliée à akelius residential property ab",
+    "footer.proto": "© 2026 — prototype",
+  },
+  en: {
+    "nav.rent": "rent",
+    "nav.cities": "our cities",
+    "nav.services": "services",
+    "nav.find": "find a home",
+    "hero.kicker": "apartment rentals",
+    "hero.sub":
+      "carefully renovated apartments in nine metropolitan cities across europe and north america.",
+    "stats.units": "apartments owned",
+    "stats.cities": "cities worldwide",
+    "stats.service": "tenant service",
+    "stats.fees": "agency fees",
+    "featured.kicker": "selection",
+    "featured.title": "featured homes",
+    "featured.all": "view all listings →",
+    "cities.kicker": "where to find us",
+    "cities.title": "our cities",
+    "cities.count": "{n} homes in the demo",
+    "services.kicker": "why akelius",
+    "services.title": "rent directly from the owner",
+    "svc1.title": "renovated homes",
+    "svc1.text":
+      "every apartment is refurbished before you move in: kitchen, bathroom, floors and paint.",
+    "svc2.title": "a service that answers",
+    "svc2.text":
+      "a local team available 24/7 for emergencies, and online request tracking.",
+    "svc3.title": "no hidden fees",
+    "svc3.text":
+      "clear rents, itemised charges, 100% online application and transparent inventory.",
+    "svc4.title": "present in 4 countries",
+    "svc4.text":
+      "buildings owned and managed in-house in nine cities, from paris to new york — one single contact.",
+    "search.city": "city",
+    "search.surface": "min size (sqm)",
+    "search.budget": "max budget / month",
+    "search.rooms": "min rooms",
+    "search.any": "any",
+    "search.studio": "studio and up",
+    "search.roomsN": "{n} rooms and up",
+    "search.go": "search",
+    "search.exSurface": "e.g. 40",
+    "search.exBudget": "e.g. 2,000",
+    "results.one": "{n} home for rent",
+    "results.many": "{n} homes for rent",
+    "results.in": "in",
+    "sort.label": "sort by",
+    "sort.relevance": "relevance",
+    "sort.priceAsc": "price: low to high",
+    "sort.priceDesc": "price: high to low",
+    "sort.surface": "size",
+    "sort.new": "newest",
+    "filters": "filters",
+    "chip.remove": "remove this filter",
+    "empty.title": "no home matches your search",
+    "empty.sub": "try a higher budget or a smaller minimum size.",
+    "emptyCity.title": "{city} homes are coming to the demo soon",
+    "emptyCity.sub":
+      "meanwhile, {city} listings are available on the official akelius website.",
+    "emptyCity.cta": "view on the official site ↗",
+    "map.loading": "loading map…",
+    "view.map": "show map",
+    "view.list": "show list",
+    "card.month": "/ month incl.",
+    "card.new": "new",
+    "card.furnished": "furnished",
+    "detail.home": "home",
+    "detail.desc": "description",
+    "detail.amen": "good to know",
+    "detail.dpe": "energy certificate",
+    "detail.dpeClass": "class {c}",
+    "detail.loc": "location",
+    "f.surface": "size",
+    "f.rooms": "rooms",
+    "f.bedrooms": "bedrooms",
+    "f.floor": "floor",
+    "f.ground": "ground floor",
+    "f.elevator": "elevator",
+    "f.furnished": "furnished",
+    "f.balcony": "balcony",
+    "f.metro": "metro",
+    "f.built": "built",
+    "f.deposit": "deposit",
+    "f.available": "available",
+    "f.now": "from now on",
+    "f.on": "from {d}",
+    "yes": "yes",
+    "no": "no",
+    "detail.charges": "including {x} charges",
+    "detail.availNow": "available now",
+    "detail.availOn": "available from {d}",
+    "detail.visit": "book a viewing",
+    "detail.name": "name",
+    "detail.namePh": "your name",
+    "detail.email": "e-mail",
+    "detail.msg": "message",
+    "detail.msgDefault": "hello, i would like to visit “{t}”.",
+    "detail.reply": "reply within 24 h — no commitment",
+    "detail.sent": "request sent ✓",
+    "detail.sentSub": "our local team will get back to you within 24 h to arrange the visit.",
+    "detail.owner": "owner-landlord — direct rental, no agency fees.",
+    "detail.official": "view the listing on akelius.fr ↗",
+    "detail.pdf": "download the pdf sheet",
+    "detail.similar": "in the same neighbourhood",
+    "detail.notfound": "listing not found",
+    "detail.notfoundSub": "this listing no longer exists or has not been published yet.",
+    "detail.back": "back to search",
+    "footer.blurb":
+      "carefully renovated apartments in nine metropolitan cities across europe and north america.",
+    "footer.rent": "rent",
+    "footer.team": "akelius team",
+    "footer.about": "akelius",
+    "footer.official": "official websites",
+    "footer.services": "our services",
+    "footer.cities": "our cities",
+    "footer.contact": "contact",
+    "footer.backoffice": "back-office",
+    "footer.publish": "publish a home",
+    "footer.manage": "manage listings",
+    "footer.inCity": "apartments in {city}",
+    "footer.allListings": "all our listings",
+    "footer.disclaimer":
+      "unofficial redesign mock-up — product demonstration, not affiliated with akelius residential property ab",
+    "footer.proto": "© 2026 — prototype",
+  },
+  es: {
+    "nav.rent": "alquilar",
+    "nav.cities": "nuestras ciudades",
+    "nav.services": "servicios",
+    "nav.find": "encontrar un piso",
+    "hero.kicker": "alquiler de apartamentos",
+    "hero.sub":
+      "apartamentos renovados con esmero, en nueve metrópolis de europa y américa del norte.",
+    "stats.units": "apartamentos en propiedad",
+    "stats.cities": "ciudades en el mundo",
+    "stats.service": "servicio al inquilino",
+    "stats.fees": "gastos de agencia",
+    "featured.kicker": "selección",
+    "featured.title": "pisos destacados",
+    "featured.all": "ver todos los anuncios →",
+    "cities.kicker": "dónde encontrarnos",
+    "cities.title": "nuestras ciudades",
+    "cities.count": "{n} pisos en la demo",
+    "services.kicker": "por qué akelius",
+    "services.title": "alquile directamente al propietario",
+    "svc1.title": "pisos renovados",
+    "svc1.text":
+      "cada apartamento se renueva antes de su llegada: cocina, baño, suelos y pintura.",
+    "svc2.title": "un servicio que responde",
+    "svc2.text":
+      "un equipo local disponible 24 h para urgencias y seguimiento de solicitudes en línea.",
+    "svc3.title": "sin gastos ocultos",
+    "svc3.text":
+      "alquileres claros, gastos detallados, expediente 100 % en línea e inventario transparente.",
+    "svc4.title": "presentes en 4 países",
+    "svc4.text":
+      "edificios propios gestionados internamente en nueve ciudades, de parís a nueva york — un solo interlocutor.",
+    "search.city": "ciudad",
+    "search.surface": "superficie mín (m²)",
+    "search.budget": "presupuesto máx / mes",
+    "search.rooms": "habitaciones mín",
+    "search.any": "indiferente",
+    "search.studio": "estudio o más",
+    "search.roomsN": "{n} habitaciones o más",
+    "search.go": "buscar",
+    "search.exSurface": "ej. 40",
+    "search.exBudget": "ej. 2 000",
+    "results.one": "{n} piso en alquiler",
+    "results.many": "{n} pisos en alquiler",
+    "results.in": "en",
+    "sort.label": "ordenar por",
+    "sort.relevance": "relevancia",
+    "sort.priceAsc": "precio ascendente",
+    "sort.priceDesc": "precio descendente",
+    "sort.surface": "superficie",
+    "sort.new": "novedades",
+    "filters": "filtros",
+    "chip.remove": "quitar este filtro",
+    "empty.title": "ningún piso corresponde a su búsqueda",
+    "empty.sub": "amplíe su presupuesto o reduzca la superficie mínima.",
+    "emptyCity.title": "los pisos de {city} llegarán pronto a la demo",
+    "emptyCity.sub":
+      "mientras tanto, los anuncios de {city} están disponibles en la web oficial de akelius.",
+    "emptyCity.cta": "ver en la web oficial ↗",
+    "map.loading": "cargando el mapa…",
+    "view.map": "ver el mapa",
+    "view.list": "ver la lista",
+    "card.month": "/ mes c.i.",
+    "card.new": "nuevo",
+    "card.furnished": "amueblado",
+    "detail.home": "inicio",
+    "detail.desc": "descripción",
+    "detail.amen": "a saber",
+    "detail.dpe": "certificado energético",
+    "detail.dpeClass": "clase {c}",
+    "detail.loc": "ubicación",
+    "f.surface": "superficie",
+    "f.rooms": "habitaciones",
+    "f.bedrooms": "dormitorios",
+    "f.floor": "planta",
+    "f.ground": "planta baja",
+    "f.elevator": "ascensor",
+    "f.furnished": "amueblado",
+    "f.balcony": "balcón",
+    "f.metro": "metro",
+    "f.built": "construcción",
+    "f.deposit": "fianza",
+    "f.available": "disponible",
+    "f.now": "inmediatamente",
+    "f.on": "el {d}",
+    "yes": "sí",
+    "no": "no",
+    "detail.charges": "incluye {x} de gastos",
+    "detail.availNow": "disponible inmediatamente",
+    "detail.availOn": "disponible el {d}",
+    "detail.visit": "concertar una visita",
+    "detail.name": "nombre",
+    "detail.namePh": "su nombre",
+    "detail.email": "e-mail",
+    "detail.msg": "mensaje",
+    "detail.msgDefault": "hola, me gustaría visitar «{t}».",
+    "detail.reply": "respuesta en 24 h — sin compromiso",
+    "detail.sent": "solicitud enviada ✓",
+    "detail.sentSub":
+      "nuestro equipo local le contactará en 24 h para organizar la visita.",
+    "detail.owner": "propietario-arrendador — alquiler directo, sin gastos de agencia.",
+    "detail.official": "ver el anuncio en akelius.fr ↗",
+    "detail.pdf": "descargar la ficha pdf",
+    "detail.similar": "en el mismo barrio",
+    "detail.notfound": "anuncio no encontrado",
+    "detail.notfoundSub": "este anuncio ya no existe o aún no se ha publicado.",
+    "detail.back": "volver a la búsqueda",
+    "footer.blurb":
+      "apartamentos renovados con esmero, en nueve metrópolis de europa y américa del norte.",
+    "footer.rent": "alquilar",
+    "footer.team": "equipo akelius",
+    "footer.about": "akelius",
+    "footer.official": "webs oficiales",
+    "footer.services": "nuestros servicios",
+    "footer.cities": "nuestras ciudades",
+    "footer.contact": "contacto",
+    "footer.backoffice": "back-office",
+    "footer.publish": "publicar un piso",
+    "footer.manage": "gestionar los anuncios",
+    "footer.inCity": "apartamentos en {city}",
+    "footer.allListings": "todos nuestros anuncios",
+    "footer.disclaimer":
+      "maqueta de rediseño no oficial — demostración de producto, no afiliada a akelius residential property ab",
+    "footer.proto": "© 2026 — prototipo",
+  },
+};
+
+/* ---------------------------------------------------------------- contexte */
+
+interface I18nContext {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: (key: string, vars?: Record<string, string | number>) => string;
+}
+
+const Ctx = createContext<I18nContext>({
+  lang: "fr",
+  setLang: () => {},
+  t: (k) => k,
+});
+
+export function LangProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLangState] = useState<Lang>("fr");
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(KEY) as Lang | null;
+      if (saved && LANGS.includes(saved)) setLangState(saved);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  function setLang(l: Lang) {
+    setLangState(l);
+    try {
+      window.localStorage.setItem(KEY, l);
+    } catch {}
+  }
+
+  function t(key: string, vars?: Record<string, string | number>): string {
+    let s = DICT[lang][key] ?? DICT.fr[key] ?? key;
+    if (vars)
+      for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, String(v));
+    return s;
+  }
+
+  return <Ctx.Provider value={{ lang, setLang, t }}>{children}</Ctx.Provider>;
+}
+
+export function useI18n() {
+  return useContext(Ctx);
+}

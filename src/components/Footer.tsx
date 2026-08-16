@@ -1,33 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Wordmark } from "./Logo";
-
-const INTERNAL_COLS: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: "louer",
-    links: [
-      { label: "appartements à paris", href: "/recherche?ville=paris" },
-      { label: "appartements à londres", href: "/recherche?ville=londres" },
-      { label: "appartements à montréal", href: "/recherche?ville=montreal" },
-      { label: "toutes nos annonces", href: "/recherche" },
-    ],
-  },
-  {
-    title: "équipe akelius",
-    links: [
-      { label: "back-office", href: "/pro" },
-      { label: "publier un bien", href: "/pro/annonces/nouvelle" },
-      { label: "gérer les annonces", href: "/pro/annonces" },
-    ],
-  },
-  {
-    title: "akelius",
-    links: [
-      { label: "nos services", href: "/#services" },
-      { label: "nos villes", href: "/#villes" },
-      { label: "contact", href: "/#contact" },
-    ],
-  },
-];
+import { useI18n } from "@/lib/i18n";
 
 /* liens vers les sites officiels du groupe (nouvel onglet) */
 const OFFICIAL_LINKS: { label: string; href: string }[] = [
@@ -41,14 +16,43 @@ const OFFICIAL_LINKS: { label: string; href: string }[] = [
 ];
 
 export default function Footer() {
+  const { t } = useI18n();
+
+  const cols: { title: string; links: { label: string; href: string }[] }[] = [
+    {
+      title: t("footer.rent"),
+      links: [
+        { label: t("footer.inCity", { city: "paris" }), href: "/recherche?ville=paris" },
+        { label: t("footer.inCity", { city: "londres" }), href: "/recherche?ville=londres" },
+        { label: t("footer.inCity", { city: "new york" }), href: "/recherche?ville=new-york" },
+        { label: t("footer.allListings"), href: "/recherche" },
+      ],
+    },
+    {
+      title: t("footer.about"),
+      links: [
+        { label: t("footer.services"), href: "/#services" },
+        { label: t("footer.cities"), href: "/#villes" },
+        { label: t("footer.contact"), href: "/#contact" },
+      ],
+    },
+    {
+      title: t("footer.team"),
+      links: [
+        { label: t("footer.backoffice"), href: "/pro" },
+        { label: t("footer.publish"), href: "/pro/annonces/nouvelle" },
+        { label: t("footer.manage"), href: "/pro/annonces" },
+      ],
+    },
+  ];
+
   return (
     <footer id="contact" className="border-t border-line bg-sand">
       <div className="container-ak grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.3fr_repeat(4,1fr)]">
         <div>
           <Wordmark className="h-6" />
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-            des appartements rénovés avec soin, dans neuf métropoles
-            d’europe et d’amérique du nord.
+            {t("footer.blurb")}
           </p>
           <p className="mt-4 text-sm font-semibold lowercase text-ink-soft">
             a better way to live
@@ -64,7 +68,7 @@ export default function Footer() {
           </address>
         </div>
 
-        {INTERNAL_COLS.map((col) => (
+        {cols.map((col) => (
           <nav key={col.title} aria-label={col.title}>
             <h3 className="text-xs font-bold lowercase tracking-[0.14em] text-muted">
               {col.title}
@@ -84,9 +88,9 @@ export default function Footer() {
           </nav>
         ))}
 
-        <nav aria-label="sites officiels">
+        <nav aria-label={t("footer.official")}>
           <h3 className="text-xs font-bold lowercase tracking-[0.14em] text-muted">
-            sites officiels
+            {t("footer.official")}
           </h3>
           <ul className="mt-4 space-y-2.5">
             {OFFICIAL_LINKS.map((l) => (
@@ -110,11 +114,8 @@ export default function Footer() {
 
       <div className="border-t border-line">
         <div className="container-ak flex flex-col gap-2 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            maquette de refonte non officielle — démonstration produit, non
-            affiliée à akelius residential property ab
-          </p>
-          <p>© 2026 — prototype</p>
+          <p>{t("footer.disclaimer")}</p>
+          <p>{t("footer.proto")}</p>
         </div>
       </div>
     </footer>

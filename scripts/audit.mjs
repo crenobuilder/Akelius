@@ -27,6 +27,7 @@ const ctx = await browser.newContext({ viewport: { width: 1440, height: 960 } })
 
 const visited = new Map(); // path -> report
 const externals = new Map(); // href -> [pages]
+const apiLinks = new Map(); // path -> status (vérifiés en HTTP simple, pas en navigation)
 const queue = [...SEEDS];
 
 function normalize(href) {
@@ -79,7 +80,9 @@ while (queue.length) {
     const n = normalize(href);
     if (n.internal) {
       const clean = n.internal;
-      if (!visited.has(clean) && !queue.includes(clean)) queue.push(clean);
+      if (clean.startsWith("/api/")) {
+        if (!apiLinks.has(clean)) apiLinks.set(clean, null);
+      } else if (!visited.has(clean) && !queue.includes(clean)) queue.push(clean);
     } else if (n.external) {
       if (!externals.has(n.external)) externals.set(n.external, []);
       if (!externals.get(n.external).includes(path)) externals.get(n.external).push(path);
@@ -96,6 +99,16 @@ while (queue.length) {
     consoleErrors,
   });
   await page.close();
+}
+
+// endpoints api (pdf…) : simple requête http, pas de navigation
+for (const path of apiLinks.keys()) {
+  try {
+    const res = await fetch(BASE + path);
+    apiLinks.set(path, `${res.status} ${res.headers.get("content-type") ?? ""}`.trim());
+  } catch (e) {
+    apiLinks.set(path, `ERREUR ${String(e).slice(0, 60)}`);
+  }
 }
 
 await browser.close();
@@ -138,6 +151,11 @@ if (withErrors.length) {
     md += `- \`${path}\` :\n`;
     for (const e of r.consoleErrors) md += `  - ${e}\n`;
   }
+}
+
+if (apiLinks.size) {
+  md += `\n## endpoints api (fiches pdf…)\n\n| endpoint | statut |\n| --- | --- |\n`;
+  for (const [path, status] of apiLinks) md += `| \`${path}\` | ${status} |\n`;
 }
 
 md += `\n## liens externes (footer « sites officiels », etc.)

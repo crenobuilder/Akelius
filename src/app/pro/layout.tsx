@@ -1,0 +1,5 @@
+import ProGate from "@/components/ProGate";
+
+export default function ProLayout({ children }: { children: React.ReactNode }) {
+  return <ProGate>{children}</ProGate>;
+}

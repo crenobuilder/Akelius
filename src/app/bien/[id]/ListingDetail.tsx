@@ -9,13 +9,21 @@ import { LISTINGS, listingBySlug } from "@/data/listings";
 import { cityBySlug } from "@/data/cities";
 import { proListingBySlug } from "@/lib/proStore";
 import type { Dpe, Listing } from "@/lib/types";
-import { DPE_COLORS, formatDate, formatPrice, isAvailableNow, roomsLabel } from "@/lib/format";
+import { DPE_COLORS, formatPrice, isAvailableNow } from "@/lib/format";
+import {
+  formatDateLang,
+  listingDescription,
+  listingTitle,
+  roomsLabelLang,
+  useI18n,
+} from "@/lib/i18n";
 
 const ListingsMap = dynamic(() => import("@/components/ListingsMap"), { ssr: false });
 
 const DPE_SCALE: Dpe[] = ["A", "B", "C", "D", "E", "F", "G"];
 
 export default function ListingDetail({ slug }: { slug: string }) {
+  const { lang, t } = useI18n();
   const [proListing, setProListing] = useState<Listing | null>(null);
   const [checkedPro, setCheckedPro] = useState(false);
   const [photoIdx, setPhotoIdx] = useState(0);
@@ -46,12 +54,12 @@ export default function ListingDetail({ slug }: { slug: string }) {
     if (!checkedPro) return null;
     return (
       <div className="container-ak py-24 text-center">
-        <h1 className="text-2xl font-extrabold lowercase text-ink">bien introuvable</h1>
-        <p className="mt-2 text-muted">
-          cette annonce n’existe plus ou n’a pas encore été publiée.
-        </p>
+        <h1 className="text-2xl font-extrabold lowercase text-ink">
+          {t("detail.notfound")}
+        </h1>
+        <p className="mt-2 text-muted">{t("detail.notfoundSub")}</p>
         <Link href="/recherche" className="btn btn-primary mt-6">
-          retour à la recherche
+          {t("detail.back")}
         </Link>
       </div>
     );
@@ -60,39 +68,40 @@ export default function ListingDetail({ slug }: { slug: string }) {
   const city = cityBySlug(listing.city);
   const available = isAvailableNow(listing.availableFrom);
   const photos = listing.photos.length > 0 ? listing.photos : [""];
+  const title = listingTitle(listing, lang);
+  const description = listingDescription(listing, lang);
 
   const facts: [string, string][] = [
-    ["surface", `${Math.round(listing.surface)} m²`],
-    ["pièces", roomsLabel(listing.rooms)],
-    ["chambres", String(listing.bedrooms)],
+    ["f.surface", `${Math.round(listing.surface)} m²`],
+    ["f.rooms", roomsLabelLang(listing.rooms, lang)],
+    ["f.bedrooms", String(listing.bedrooms)],
   ];
   if (listing.floor !== null && listing.floor !== undefined)
-    facts.push(["étage", listing.floor === 0 ? "rez-de-chaussée" : `${listing.floor}e`]);
+    facts.push(["f.floor", listing.floor === 0 ? t("f.ground") : `${listing.floor}`]);
   if (listing.elevator !== undefined)
-    facts.push(["ascenseur", listing.elevator ? "oui" : "non"]);
+    facts.push(["f.elevator", listing.elevator ? t("yes") : t("no")]);
   if (listing.furnished !== undefined)
-    facts.push(["meublé", listing.furnished ? "oui" : "non"]);
+    facts.push(["f.furnished", listing.furnished ? t("yes") : t("no")]);
   if (listing.balcony !== undefined)
-    facts.push(["balcon", listing.balcony ? "oui" : "non"]);
-  if (listing.station) facts.push(["métro", listing.station]);
-  if (listing.constructionYear)
-    facts.push(["construction", String(listing.constructionYear)]);
+    facts.push(["f.balcony", listing.balcony ? t("yes") : t("no")]);
+  if (listing.station) facts.push(["f.metro", listing.station]);
+  if (listing.constructionYear) facts.push(["f.built", String(listing.constructionYear)]);
   if (listing.deposit)
-    facts.push(["dépôt de garantie", formatPrice(listing.deposit, listing.currency)]);
+    facts.push(["f.deposit", formatPrice(listing.deposit, listing.currency)]);
   facts.push([
-    "disponible",
-    available ? "immédiatement" : formatDate(listing.availableFrom),
+    "f.available",
+    available ? t("f.now") : t("f.on", { d: formatDateLang(listing.availableFrom, lang) }),
   ]);
 
   return (
     <div className="pb-16">
       {/* fil d’ariane */}
       <div className="container-ak py-4 text-sm lowercase text-muted">
-        <Link href="/" className="hover:text-brand">
-          accueil
+        <Link href="/" className="hover:text-brand-deep">
+          {t("detail.home")}
         </Link>
         {" / "}
-        <Link href={`/recherche?ville=${listing.city}`} className="hover:text-brand">
+        <Link href={`/recherche?ville=${listing.city}`} className="hover:text-brand-deep">
           {city?.name ?? listing.city}
         </Link>
         {" / "}
@@ -105,7 +114,7 @@ export default function ListingDetail({ slug }: { slug: string }) {
           <div className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-ak)] bg-sand-deep">
             <SmartImage
               src={photos[photoIdx]}
-              alt={listing.title}
+              alt={title}
               className="h-full w-full object-cover"
               loading="eager"
             />
@@ -136,29 +145,31 @@ export default function ListingDetail({ slug }: { slug: string }) {
       <div className="container-ak mt-8 grid gap-10 lg:grid-cols-[1.7fr_1fr]">
         <div>
           <p className="kicker">{listing.district.toLowerCase()}</p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">
-            {listing.title}
-          </h1>
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">{title}</h1>
           <p className="mt-1 text-muted">{listing.address}</p>
 
-          <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-ak)] border border-line bg-line sm:grid-cols-4">
+          <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-ctl)] border border-line bg-line sm:grid-cols-4">
             {facts.map(([k, v]) => (
               <div key={k} className="bg-paper p-4">
-                <p className="text-xs lowercase text-muted">{k}</p>
+                <p className="text-xs lowercase text-muted">{t(k)}</p>
                 <p className="mt-1 text-sm font-bold lowercase text-ink">{v}</p>
               </div>
             ))}
           </div>
 
-          <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">description</h2>
-          <p className="mt-3 leading-relaxed text-ink-soft">{listing.description}</p>
+          <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">
+            {t("detail.desc")}
+          </h2>
+          <p className="mt-3 leading-relaxed text-ink-soft">{description}</p>
 
           {listing.amenities.length > 0 && (
             <>
-              <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">prestations</h2>
+              <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">
+                {t("detail.amen")}
+              </h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {listing.amenities.map((a) => (
-                  <span key={a} className="chip">
+                  <span key={a} className="chip !cursor-default">
                     {a}
                   </span>
                 ))}
@@ -169,7 +180,7 @@ export default function ListingDetail({ slug }: { slug: string }) {
           {listing.dpe && (
             <>
               <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">
-                diagnostic énergie
+                {t("detail.dpe")}
               </h2>
               <div className="mt-3 flex items-center gap-1.5">
                 {DPE_SCALE.map((d) => (
@@ -185,12 +196,16 @@ export default function ListingDetail({ slug }: { slug: string }) {
                     {d}
                   </span>
                 ))}
-                <span className="ml-3 text-sm text-muted">classe {listing.dpe}</span>
+                <span className="ml-3 text-sm text-muted">
+                  {t("detail.dpeClass", { c: listing.dpe })}
+                </span>
               </div>
             </>
           )}
 
-          <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">localisation</h2>
+          <h2 className="mt-10 text-xl font-extrabold lowercase text-ink">
+            {t("detail.loc")}
+          </h2>
           <div className="mt-3 h-[320px] overflow-hidden rounded-[var(--radius-ak)] border border-line">
             <ListingsMap
               listings={[listing]}
@@ -206,29 +221,30 @@ export default function ListingDetail({ slug }: { slug: string }) {
           <div className="rounded-[var(--radius-ak)] border border-line bg-paper p-6 shadow-[var(--shadow-card)]">
             <p className="text-3xl font-extrabold tracking-tight text-ink">
               {formatPrice(listing.price, listing.currency)}
-              <span className="ml-1.5 text-sm font-medium text-muted">/ mois cc</span>
+              <span className="ml-1.5 text-sm font-medium text-muted">
+                {t("card.month")}
+              </span>
             </p>
             {listing.charges > 0 && (
               <p className="mt-1 text-sm text-muted">
-                dont {formatPrice(listing.charges, listing.currency)} de charges
+                {t("detail.charges", {
+                  x: formatPrice(listing.charges, listing.currency),
+                })}
               </p>
             )}
             <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold lowercase">
-              <span
-                className={`h-2 w-2 rounded-full ${available ? "bg-ok" : "bg-warn"}`}
-              />
+              <span className={`h-2 w-2 rounded-full ${available ? "bg-ok" : "bg-warn"}`} />
               {available
-                ? "disponible immédiatement"
-                : `disponible le ${formatDate(listing.availableFrom)}`}
+                ? t("detail.availNow")
+                : t("detail.availOn", {
+                    d: formatDateLang(listing.availableFrom, lang),
+                  })}
             </p>
 
             {sent ? (
-              <div className="mt-6 rounded-[var(--radius-ak)] bg-brand-wash p-4 text-sm">
-                <p className="font-bold lowercase text-brand-deep">demande envoyée ✓</p>
-                <p className="mt-1 text-ink-soft">
-                  notre équipe locale vous recontacte sous 24 h pour organiser
-                  la visite.
-                </p>
+              <div className="mt-6 rounded-[var(--radius-ctl)] bg-brand-wash p-4 text-sm">
+                <p className="font-bold lowercase text-brand-deep">{t("detail.sent")}</p>
+                <p className="mt-1 text-ink-soft">{t("detail.sentSub")}</p>
               </div>
             ) : (
               <form
@@ -240,13 +256,18 @@ export default function ListingDetail({ slug }: { slug: string }) {
               >
                 <div>
                   <label className="field-label" htmlFor="c-nom">
-                    nom
+                    {t("detail.name")}
                   </label>
-                  <input id="c-nom" className="field-input" required placeholder="votre nom" />
+                  <input
+                    id="c-nom"
+                    className="field-input"
+                    required
+                    placeholder={t("detail.namePh")}
+                  />
                 </div>
                 <div>
                   <label className="field-label" htmlFor="c-email">
-                    e-mail
+                    {t("detail.email")}
                   </label>
                   <input
                     id="c-email"
@@ -258,29 +279,46 @@ export default function ListingDetail({ slug }: { slug: string }) {
                 </div>
                 <div>
                   <label className="field-label" htmlFor="c-msg">
-                    message
+                    {t("detail.msg")}
                   </label>
                   <textarea
                     id="c-msg"
                     className="field-input min-h-24"
-                    defaultValue={`bonjour, je souhaite visiter « ${listing.title} ».`}
+                    defaultValue={t("detail.msgDefault", { t: title })}
                   />
                 </div>
                 <button type="submit" className="btn btn-brand w-full">
-                  planifier une visite
+                  {t("detail.visit")}
                 </button>
-                <p className="text-center text-xs text-muted">
-                  réponse sous 24 h — sans engagement
-                </p>
+                <p className="text-center text-xs text-muted">{t("detail.reply")}</p>
               </form>
+            )}
+
+            {listing.source !== "pro" && (
+              <a
+                href={`/api/pdf/${listing.slug}?lang=${lang}`}
+                download={`akelius-${listing.slug}.pdf`}
+                className="btn btn-ghost mt-3 w-full"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 fill-none stroke-current stroke-2"
+                  aria-hidden
+                >
+                  <path
+                    d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {t("detail.pdf")}
+              </a>
             )}
           </div>
 
           <div className="mt-4 rounded-[var(--radius-ak)] border border-line bg-sand p-5 text-sm">
             <p className="font-bold lowercase text-ink">akelius {city?.name ?? ""}</p>
-            <p className="mt-1 text-muted">
-              propriétaire-bailleur — location en direct, sans frais d’agence.
-            </p>
+            <p className="mt-1 text-muted">{t("detail.owner")}</p>
             {listing.officialUrl && (
               <a
                 href={listing.officialUrl}
@@ -288,7 +326,7 @@ export default function ListingDetail({ slug }: { slug: string }) {
                 rel="noopener noreferrer"
                 className="mt-3 inline-flex items-center gap-1 text-sm font-semibold lowercase text-brand-deep hover:underline"
               >
-                voir l’annonce sur akelius.fr ↗
+                {t("detail.official")}
               </a>
             )}
           </div>
@@ -299,7 +337,7 @@ export default function ListingDetail({ slug }: { slug: string }) {
       {similar.length > 0 && (
         <div className="container-ak mt-16">
           <h2 className="text-2xl font-extrabold lowercase tracking-tight text-ink">
-            dans le même quartier
+            {t("detail.similar")}
           </h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {similar.map((l) => (

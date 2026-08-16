@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import type { Listing } from "@/lib/types";
-import { formatPrice, roomsLabel } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
+import { listingTitle, roomsLabelLang, useI18n } from "@/lib/i18n";
 import SmartImage from "./SmartImage";
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export default function ListingCard({ listing, onHover, highlighted }: Props) {
+  const { lang, t } = useI18n();
+
   return (
     <Link
       href={`/bien/${listing.slug}`}
@@ -26,18 +29,18 @@ export default function ListingCard({ listing, onHover, highlighted }: Props) {
       <div className="relative aspect-[4/3] overflow-hidden bg-sand-deep">
         <SmartImage
           src={listing.photos[0]}
-          alt={listing.title}
+          alt={listingTitle(listing, lang)}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
         <div className="absolute left-3 top-3 flex gap-2">
           {listing.isNew && (
             <span className="rounded-full bg-brand px-2.5 py-1 text-[0.6875rem] font-bold lowercase text-white shadow-sm">
-              nouveau
+              {t("card.new")}
             </span>
           )}
           {listing.furnished && (
             <span className="rounded-full bg-ink/75 px-2.5 py-1 text-[0.6875rem] font-bold lowercase text-white shadow-sm backdrop-blur">
-              meublé
+              {t("card.furnished")}
             </span>
           )}
         </div>
@@ -46,14 +49,14 @@ export default function ListingCard({ listing, onHover, highlighted }: Props) {
         <div className="flex items-baseline justify-between gap-3">
           <p className="text-lg font-extrabold text-ink">
             {formatPrice(listing.price, listing.currency)}
-            <span className="ml-1 text-xs font-medium text-muted">/ mois cc</span>
+            <span className="ml-1 text-xs font-medium text-muted">{t("card.month")}</span>
           </p>
           <p className="shrink-0 text-sm font-semibold text-ink-soft">
-            {roomsLabel(listing.rooms)} · {Math.round(listing.surface)} m²
+            {roomsLabelLang(listing.rooms, lang)} · {Math.round(listing.surface)} m²
           </p>
         </div>
         <h3 className="mt-1.5 line-clamp-1 text-[0.9375rem] font-semibold text-ink">
-          {listing.title}
+          {listingTitle(listing, lang)}
         </h3>
         <p className="mt-1 text-sm lowercase text-muted">{listing.district}</p>
       </div>
