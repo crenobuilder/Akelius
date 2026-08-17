@@ -113,8 +113,8 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-line">
-        <div className="container-ak flex flex-col gap-2 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>{t("footer.disclaimer")}</p>
+        <div className="container-ak space-y-2 py-6 text-xs leading-relaxed text-muted">
+          <p className="max-w-4xl">{t("footer.disclaimer")}</p>
           <p>{t("footer.proto")}</p>
         </div>
       </div>

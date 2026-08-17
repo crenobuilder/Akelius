@@ -30,6 +30,24 @@ fusionnée dans `main`.
   (`akelius-<team>.vercel.app` ou votre domaine).
 - Tant qu'on ne fusionne pas, la production n'est jamais touchée.
 
+## accès privé (démo sur invitation)
+
+Le site peut être verrouillé derrière un code d'accès, sans rien payer :
+
+1. Vercel → projet → **Settings → Environment Variables** → ajouter
+   `DEMO_ACCESS_CODE` = le code de votre choix (ex. `rocher75008`),
+   environnements *Production* + *Preview* → **Save**
+2. **Redéployer** (Deployments → ⋯ sur le dernier → Redeploy)
+
+Comportement :
+- visiteur sans code → page « accès sur invitation » + non-indexation
+  (robots.txt, meta robots, X-Robots-Tag)
+- **lien magique** à envoyer : `https://<votre-url>/?acces=rocher75008`
+  → ouvre directement le site et mémorise l'accès 30 jours
+- sans la variable d'environnement, le site reste ouvert (dev local)
+
+Pour révoquer l'accès : changer ou supprimer la valeur du code, redéployer.
+
 ## alternative cli
 
 ```bash

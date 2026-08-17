@@ -133,7 +133,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.inCity": "appartements à {city}",
     "footer.allListings": "toutes nos annonces",
     "footer.disclaimer":
-      "maquette de refonte non officielle — démonstration produit, non affiliée à akelius residential property ab",
+      "maquette non officielle, réalisée à titre de démonstration uniquement. le nom, le logo, les photos et les données akelius appartiennent à akelius residential property ab et ne sont utilisés que pour illustrer cette proposition, sans affiliation ni usage commercial — retrait immédiat sur simple demande.",
     "footer.proto": "© 2026 — prototype · build v8",
     "view.grid": "grille",
     "view.rows": "liste",
@@ -272,7 +272,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.inCity": "apartments in {city}",
     "footer.allListings": "all our listings",
     "footer.disclaimer":
-      "unofficial redesign mock-up — product demonstration, not affiliated with akelius residential property ab",
+      "unofficial mock-up, built for demonstration purposes only. the akelius name, logo, photos and data belong to akelius residential property ab and are used solely to illustrate this proposal, with no affiliation or commercial use — removed immediately upon request.",
     "footer.proto": "© 2026 — prototype · build v8",
     "view.grid": "grid",
     "view.rows": "list",
@@ -412,7 +412,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.inCity": "apartamentos en {city}",
     "footer.allListings": "todos nuestros anuncios",
     "footer.disclaimer":
-      "maqueta de rediseño no oficial — demostración de producto, no afiliada a akelius residential property ab",
+      "maqueta no oficial, realizada únicamente con fines de demostración. el nombre, el logo, las fotos y los datos de akelius pertenecen a akelius residential property ab y se utilizan solo para ilustrar esta propuesta, sin afiliación ni uso comercial — se retirará de inmediato a petición.",
     "footer.proto": "© 2026 — prototipo · build v8",
     "view.grid": "cuadrícula",
     "view.rows": "lista",

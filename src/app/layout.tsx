@@ -13,7 +13,8 @@ import { LangProvider } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "akelius — a better way to live",
   description:
-    "Maquette de refonte du site akelius : appartements rénovés à louer à Paris, Londres et Montréal. Recherche par ville, surface et budget, carte interactive, espace pro.",
+    "Maquette de refonte du site akelius (démonstration non officielle) : recherche par ville, surface et budget, carte interactive, fiches PDF, back-office.",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
