@@ -304,6 +304,7 @@ function SheetDocument({
           </View>
           <View style={s.photoRow}>
             {images.map((buf, i) => (
+              // eslint-disable-next-line jsx-a11y/alt-text -- l’Image de react-pdf n’a pas de prop alt
               <Image key={i} src={{ data: buf, format: "jpg" }} style={s.photo} />
             ))}
           </View>

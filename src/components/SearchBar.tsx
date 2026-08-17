@@ -46,7 +46,7 @@ export default function SearchBar({ variant = "hero" }: Props) {
         </label>
         <select
           id="sb-ville"
-          className="field-input"
+          className="field-input h-[46px]"
           value={ville}
           onChange={(e) => setVille(e.target.value)}
         >
@@ -63,7 +63,7 @@ export default function SearchBar({ variant = "hero" }: Props) {
         </label>
         <input
           id="sb-surface"
-          className="field-input"
+          className="field-input h-[46px]"
           type="number"
           min={0}
           step={5}
@@ -78,7 +78,7 @@ export default function SearchBar({ variant = "hero" }: Props) {
         </label>
         <input
           id="sb-budget"
-          className="field-input"
+          className="field-input h-[46px]"
           type="number"
           min={0}
           step={100}
@@ -93,7 +93,7 @@ export default function SearchBar({ variant = "hero" }: Props) {
         </label>
         <select
           id="sb-pieces"
-          className="field-input"
+          className="field-input h-[46px]"
           value={pieces}
           onChange={(e) => setPieces(e.target.value)}
         >

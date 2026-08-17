@@ -46,7 +46,6 @@ function FitBounds({ listings, fitKey }: { listings: Listing[]; fitKey?: string 
     if (current.length === 0) return;
     const bounds = L.latLngBounds(current.map((l) => [l.lat, l.lng] as [number, number]));
     map.fitBounds(bounds, { padding: [56, 56], maxZoom: 15 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, fitKey]);
   return null;
 }

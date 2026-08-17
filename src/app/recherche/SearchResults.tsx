@@ -140,10 +140,10 @@ export default function SearchResults() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] flex-col">
+    <div className="flex h-[calc(100vh-72px)] flex-col">
       {/* barre de filtres */}
       <div className="border-b border-line bg-paper">
-        <div className="container-ak !max-w-none flex flex-wrap items-center gap-3 py-3">
+        <div className="container-ak !max-w-none flex flex-wrap items-end gap-4 py-4">
           <button
             className="btn btn-ghost !px-4 !py-2.5 lg:hidden"
             onClick={() => setFiltersOpen((v) => !v)}
@@ -153,7 +153,7 @@ export default function SearchResults() {
           <div className={`${filtersOpen ? "block" : "hidden"} w-full lg:block lg:flex-1`}>
             <SearchBar variant="compact" />
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto pb-px">
             <AlertButton criteria={alertCriteria} />
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function SearchResults() {
             mobileView === "carte" ? "hidden" : "block"
           }`}
         >
-          <div className="px-5 py-5 md:px-7">
+          <div className="px-5 py-6 md:px-8">
             <h1 className="text-xl font-extrabold lowercase tracking-tight text-ink">
               {t(visible.length > 1 ? "results.many" : "results.one", {
                 n: visible.length,
@@ -192,7 +192,7 @@ export default function SearchResults() {
             )}
 
             {/* tri + vue */}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
               <div className="flex flex-wrap gap-1.5" role="group" aria-label={t("sort.label")}>
                 {SORTS.map((s) => (
                   <button

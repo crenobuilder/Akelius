@@ -428,6 +428,18 @@ body {
   animation: minicard-in 280ms var(--ease-out);
 }
 
+@keyframes lightbox-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.lightbox-in {
+  animation: lightbox-fade 220ms ease-out;
+}
+
 /* contrôles leaflet au goût du design system */
 .leaflet-control-zoom {
   border: none !important;

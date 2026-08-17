@@ -12,7 +12,7 @@ export default function RecherchePage() {
   return (
     <Suspense
       fallback={
-        <div className="flex h-[calc(100vh-4rem)] items-center justify-center text-sm lowercase text-muted">
+        <div className="flex h-[calc(100vh-72px)] items-center justify-center text-sm lowercase text-muted">
           chargement de la recherche…
         </div>
       }

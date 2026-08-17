@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import SmartImage from "@/components/SmartImage";
 import ListingCard from "@/components/ListingCard";
+import Lightbox from "@/components/Lightbox";
 import { LISTINGS, listingBySlug } from "@/data/listings";
 import { cityBySlug } from "@/data/cities";
 import { proListingBySlug } from "@/lib/proStore";
@@ -27,6 +28,7 @@ export default function ListingDetail({ slug }: { slug: string }) {
   const [proListing, setProListing] = useState<Listing | null>(null);
   const [checkedPro, setCheckedPro] = useState(false);
   const [photoIdx, setPhotoIdx] = useState(0);
+  const [galleryOpen, setGalleryOpen] = useState(false);
   const [sent, setSent] = useState(false);
 
   const catalogListing = listingBySlug(slug);
@@ -111,19 +113,24 @@ export default function ListingDetail({ slug }: { slug: string }) {
       {/* galerie */}
       <div className="container-ak">
         <div className="grid gap-2 lg:grid-cols-[2fr_1fr]">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-ak)] bg-sand-deep">
+          <button
+            onClick={() => setGalleryOpen(true)}
+            className="group relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden rounded-[var(--radius-ak)] bg-sand-deep text-left"
+            aria-label="ouvrir la galerie"
+          >
             <SmartImage
               src={photos[photoIdx]}
               alt={title}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
               loading="eager"
             />
-            {photos.length > 1 && (
-              <div className="absolute bottom-4 right-4 rounded-full bg-ink/70 px-3 py-1 text-xs font-semibold text-white">
-                {photoIdx + 1} / {photos.length}
-              </div>
-            )}
-          </div>
+            <span className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-ink/70 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur transition-colors group-hover:bg-ink/85">
+              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-none stroke-current stroke-2">
+                <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" strokeLinecap="round" />
+              </svg>
+              {photoIdx + 1} / {photos.length}
+            </span>
+          </button>
           <div className="grid grid-cols-4 gap-2 lg:h-full lg:grid-cols-2 lg:grid-rows-2">
             {photos.slice(0, 4).map((p, i) => (
               <button
@@ -332,6 +339,16 @@ export default function ListingDetail({ slug }: { slug: string }) {
           </div>
         </aside>
       </div>
+
+      {galleryOpen && (
+        <Lightbox
+          photos={photos}
+          index={photoIdx}
+          onNavigate={setPhotoIdx}
+          onClose={() => setGalleryOpen(false)}
+          title={title}
+        />
+      )}
 
       {/* biens similaires */}
       {similar.length > 0 && (

@@ -15,27 +15,6 @@ export function formatPrice(value: number, currency: Currency = "EUR"): string {
   return currency === "GBP" || currency === "USD" ? `${SYMBOLS[currency]}${grouped}` : `${grouped} ${SYMBOLS[currency]}`;
 }
 
-const MONTHS_FR = [
-  "janvier",
-  "février",
-  "mars",
-  "avril",
-  "mai",
-  "juin",
-  "juillet",
-  "août",
-  "septembre",
-  "octobre",
-  "novembre",
-  "décembre",
-];
-
-export function formatDate(iso: string): string {
-  const [y, m, d] = iso.split("-").map(Number);
-  if (!y || !m || !d) return iso;
-  return `${d} ${MONTHS_FR[m - 1]} ${y}`;
-}
-
 export function isAvailableNow(iso: string, today = "2026-08-16"): boolean {
   return iso <= today;
 }

@@ -41,7 +41,7 @@ export default function AlertButton({ criteria }: Props) {
 
   return (
     <>
-      <button className="btn btn-ghost !px-4 !py-2.5" onClick={() => setOpen(true)}>
+      <button className="btn btn-ghost h-[46px] !px-5 !py-0" onClick={() => setOpen(true)}>
         <svg
           viewBox="0 0 24 24"
           className="h-4 w-4 fill-none stroke-current stroke-[1.8]"
