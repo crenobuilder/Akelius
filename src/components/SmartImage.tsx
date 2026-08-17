@@ -26,6 +26,7 @@ export default function SmartImage({ src, alt, className, loading = "lazy" }: Pr
 
   return (
     <img
+      key={showFallback ? `fb-${src}` : src}
       src={showFallback ? FALLBACK : src}
       alt={alt}
       className={className}

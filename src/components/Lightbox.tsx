@@ -22,6 +22,15 @@ export default function Lightbox({ photos, index, onNavigate, onClose, title }: 
     [index, photos.length, onNavigate]
   );
 
+  /* précharge les photos voisines pour une navigation instantanée */
+  useEffect(() => {
+    [index - 1, index + 1].forEach((i) => {
+      const j = (i + photos.length) % photos.length;
+      const img = new window.Image();
+      img.src = photos[j];
+    });
+  }, [index, photos]);
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();

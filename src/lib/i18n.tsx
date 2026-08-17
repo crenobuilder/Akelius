@@ -134,7 +134,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.allListings": "toutes nos annonces",
     "footer.disclaimer":
       "maquette de refonte non officielle — démonstration produit, non affiliée à akelius residential property ab",
-    "footer.proto": "© 2026 — prototype",
+    "footer.proto": "© 2026 — prototype · build v8",
     "view.grid": "grille",
     "view.rows": "liste",
     "map.filterToggle": "filtrer avec la carte",
@@ -273,7 +273,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.allListings": "all our listings",
     "footer.disclaimer":
       "unofficial redesign mock-up — product demonstration, not affiliated with akelius residential property ab",
-    "footer.proto": "© 2026 — prototype",
+    "footer.proto": "© 2026 — prototype · build v8",
     "view.grid": "grid",
     "view.rows": "list",
     "map.filterToggle": "filter with the map",
@@ -413,7 +413,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.allListings": "todos nuestros anuncios",
     "footer.disclaimer":
       "maqueta de rediseño no oficial — demostración de producto, no afiliada a akelius residential property ab",
-    "footer.proto": "© 2026 — prototipo",
+    "footer.proto": "© 2026 — prototipo · build v8",
     "view.grid": "cuadrícula",
     "view.rows": "lista",
     "map.filterToggle": "filtrar con el mapa",
