@@ -6,7 +6,7 @@ import { formatPrice } from "./format";
   (via i18n) comme côté serveur (génération PDF).
 */
 
-export const LANGS = ["fr", "en", "es"] as const;
+export const LANGS = ["en", "fr", "es"] as const;
 export type Lang = (typeof LANGS)[number];
 
 export function roomsLabelLang(rooms: number, lang: Lang): string {

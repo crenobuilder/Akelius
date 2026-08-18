@@ -134,7 +134,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.allListings": "toutes nos annonces",
     "footer.disclaimer":
       "maquette non officielle, réalisée à titre de démonstration uniquement. le nom, le logo, les photos et les données akelius appartiennent à akelius residential property ab et ne sont utilisés que pour illustrer cette proposition, sans affiliation ni usage commercial — retrait immédiat sur simple demande.",
-    "footer.proto": "© 2026 — prototype · build v8",
+    "footer.proto": "© 2026 — prototype · build v9",
     "view.grid": "grille",
     "view.rows": "liste",
     "map.filterToggle": "filtrer avec la carte",
@@ -273,7 +273,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.allListings": "all our listings",
     "footer.disclaimer":
       "unofficial mock-up, built for demonstration purposes only. the akelius name, logo, photos and data belong to akelius residential property ab and are used solely to illustrate this proposal, with no affiliation or commercial use — removed immediately upon request.",
-    "footer.proto": "© 2026 — prototype · build v8",
+    "footer.proto": "© 2026 — prototype · build v9",
     "view.grid": "grid",
     "view.rows": "list",
     "map.filterToggle": "filter with the map",
@@ -413,7 +413,7 @@ const DICT: Record<Lang, Record<string, string>> = {
     "footer.allListings": "todos nuestros anuncios",
     "footer.disclaimer":
       "maqueta no oficial, realizada únicamente con fines de demostración. el nombre, el logo, las fotos y los datos de akelius pertenecen a akelius residential property ab y se utilizan solo para ilustrar esta propuesta, sin afiliación ni uso comercial — se retirará de inmediato a petición.",
-    "footer.proto": "© 2026 — prototipo · build v8",
+    "footer.proto": "© 2026 — prototipo · build v9",
     "view.grid": "cuadrícula",
     "view.rows": "lista",
     "map.filterToggle": "filtrar con el mapa",
@@ -447,7 +447,7 @@ const Ctx = createContext<I18nContext>({
 });
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("fr");
+  const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
     try {

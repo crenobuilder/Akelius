@@ -13,7 +13,7 @@ import { LangProvider } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "akelius — a better way to live",
   description:
-    "Maquette de refonte du site akelius (démonstration non officielle) : recherche par ville, surface et budget, carte interactive, fiches PDF, back-office.",
+    "Unofficial redesign demo of the akelius website: search by city, size and budget, interactive map, PDF property sheets, back-office.",
   robots: { index: false, follow: false },
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="en">
       <body className="flex min-h-screen flex-col">
         <LangProvider>
           <SplashScreen />

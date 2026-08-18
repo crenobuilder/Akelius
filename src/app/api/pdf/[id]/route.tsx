@@ -338,7 +338,7 @@ export async function GET(
   }
 
   const langParam = req.nextUrl.searchParams.get("lang") as Lang | null;
-  const lang: Lang = langParam && LANGS.includes(langParam) ? langParam : "fr";
+  const lang: Lang = langParam && LANGS.includes(langParam) ? langParam : "en";
 
   // photos du cdn officiel — les échecs sont ignorés (fiche sans photos)
   const images = (
